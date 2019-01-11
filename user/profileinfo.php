@@ -108,7 +108,7 @@
             $verificationcode = rand(7,9999999);
             $email_messaage = "
             The following link will verify your account and allow you to go online.
-           http://localhost:8080/Camagru/user/newemail_verification.php?username=$username&verificationcode=$verificationcode&email=$newemail
+           http://localhost:8080/matcha/user/newemail_verification.php?username=$username&verificationcode=$verificationcode&email=$newemail
             ";
             // Multi.Ordinary.Noob.Develop.Etc MAILINATOR.com
             mail($newemail, "Trender - confirm Email", $email_messaage,"From: Trendernoreply.com");

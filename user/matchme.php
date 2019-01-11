@@ -57,22 +57,23 @@ if (!isset($_SESSION['username'])) {
                                     <td>@' . $row['username'] . ' </td>
                                 </tr>
                                 <tr>
-                                    <td>' . $row['likes'] . ' <a href="likeinfo.php?post=' . $_GET['post'] . '&like ">Likes</a></td>
-                                    <td>' . $row['comments'] . '<a href="comments.php?post=' . $row['id'] . '">' . ' Comments </td>
+                                    <td>' . $row['Fame'] 'Likes</a></td>
+                                    <td><a href="comments.php?post="> LIKE </td>
+                                    <td><a href="comments.php?post="> PASS </td>
                                 </tr>
                             </table>
                         </div>
                         <div class="commentflexbox">
-                            <form action="commentinfo.php?post=' . $row['id'] . '&comments " method=POST id="commentform" accept-charset="UTF-8">
-                                    <table class=table>
-                                            <tr>
-                                                <td><h3>Comment</h3></td>
-                                                <td><textarea rows="3" cols="50" name="comment_text" form="commentform" required placeholder="Hey, say something :D (max chars:255)"></textarea></td>
-                                            </tr>
-                                            <tr>
-                                               <td><button type="submit" name="submit" required>post comment</button></td>
-                                           </tr>
-                                    </table>
+                            <form>
+                                <table class=table>
+                                        <tr>
+                                            <td><h3>Comment</h3></td>
+                                            <td><textarea rows="3" cols="50" name="comment_text" form="commentform" required placeholder="Hey, say something :D (max chars:255)"></textarea></td>
+                                        </tr>
+                                        <tr>
+                                           <td><button type="submit" name="submit" required>post comment</button></td>
+                                       </tr>
+                                </table>
                             </form>
                         </div>';
 

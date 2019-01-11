@@ -39,13 +39,20 @@
         $conn->exec($sql);
         //echo "User table created successfully<br>";
 
-        $sql = "CREATE TABLE IF NOT EXISTS tags (
+        $sql = "CREATE TABLE IF NOT EXISTS usertags (
             userid INT(7) UNSIGNED NOT NULL PRIMARY KEY,
             tag1 VARCHAR(20) NOT NULL DEFAULT 'empty',
             tag2 VARCHAR(20) NOT NULL DEFAULT 'empty',
             tag3 VARCHAR(20) NOT NULL DEFAULT 'empty',
             tag4 VARCHAR(20) NOT NULL DEFAULT 'empty',
             tag5 VARCHAR(20) NOT NULL DEFAULT 'empty'
+        ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin";
+    
+        $conn->exec($sql);
+
+        $sql = "CREATE TABLE IF NOT EXISTS tags (
+            userid INT(7) UNSIGNED NOT NULL PRIMARY KEY,
+            tag VARCHAR(20) NOT NULL DEFAULT 'empty'
         ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin";
     
         $conn->exec($sql);

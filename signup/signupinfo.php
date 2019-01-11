@@ -77,7 +77,7 @@
                 Eyyy $firstname $lastname
 
                 The following link will verify your account and allow you to go online.
-               http://localhost:8080/Camagru/signup/email_verification.php?username=$username&verificationcode=$verificationcode
+               http://localhost:8080/matcha/signup/email_verification.php?username=$username&verificationcode=$verificationcode
                 ";
                 // Multi.Ordinary.Noob.Develop.Etc MAILINATOR.com
                 mail($email, "Trender - confirm Email", $email_messaage,"From: Trendernoreply.com");

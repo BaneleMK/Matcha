@@ -14,14 +14,15 @@
     }
     
     .subbox{
-        border-radius: 5px;
+        /*border-radius: 5px;*/
         border: #25323b solid thin;
         display: flex;
-        background-color: #FFFFFF;
-        flex-direction: row;
+        background-color: rgba(255, 255, 255, 0.932);
+        flex-direction: column;
+        flex-wrap: wrap;
         width: 97%;
         height: 920px;
-        align-items: center;
+        /*align-items: center;*/
         justify-content: center;
         float: left;
     }
@@ -31,12 +32,12 @@
         border: #25323b solid thin;
         display: flex;
         background-color: #CCCCCC;
-        flex-direction: column;
+        flex-direction: row;
         flex-wrap: wrap;
-        width: 45%;
-        height: 30%;
-        align-items: center;
-        justify-content: center;
+        height:250px;
+        width:29%;
+        /*align-items: center;*/
+        /*justify-content: center;*/
         float: left;
         overflow-y: auto;
     }
