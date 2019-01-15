@@ -148,24 +148,93 @@ if (!isset($_SESSION['username'])) {
                                     <td><input type="text" name="location" required></td>
                                 </tr>
                                 <tr>
+                                    <td><button type="submit" name="submit">SUBMIT</button></td>
+                                </tr>
+                                </form>
+                                <form action="usertags.php?tag" method="POST">
+                                <tr>
                                     <td>Tag-1</td>
-                                    <td><input type="text" name="tags1" placeholder="Empty" required></td>
+                                    <td>
+                                    <select type="text" name="tag1" placeholder="Empty">
+                                        <?php
+                                            require_once('../config/setup.php');
+                                            $sql = "SELECT tag FROM tags";
+                                            $stmt = $conn->prepare($sql);
+                                            $stmt->execute();
+                                            while ($op = $stmt->fetch()){
+                                                $tag = $op['tag'];
+                                                echo '<option value="'.$tag.'">'.$tag.'</option>';
+                                            }
+                                        ?>
+                                    </select>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Tag-2</td>
-                                    <td><input type="text" name="tags2" placeholder="Empty" required></td>
+                                    <td>
+                                    <select type="text" name="tag2" placeholder="Empty">
+                                            <?php
+                                                require_once('../config/setup.php');
+                                                $sql = "SELECT tag FROM tags";
+                                                $stmt = $conn->prepare($sql);
+                                                $stmt->execute();
+                                                while ($op = $stmt->fetch()){
+                                                    $tag = $op['tag'];
+                                                    echo '<option value="'.$tag.'">'.$tag.'</option>';
+                                                }
+                                            ?>
+                                        </select>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Tag-3</td>
-                                    <td><input type="text" name="tags3" placeholder="Empty" required></td>
+                                    <td>
+                                    <select type="text" name="tag3" placeholder="Empty">
+                                            <?php
+                                                require_once('../config/setup.php');
+                                                $sql = "SELECT tag FROM tags";
+                                                $stmt = $conn->prepare($sql);
+                                                $stmt->execute();
+                                                while ($op = $stmt->fetch()){
+                                                    $tag = $op['tag'];
+                                                    echo '<option value="'.$tag.'">'.$tag.'</option>';
+                                                }
+                                            ?>
+                                        </select>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Tag-4</td>
-                                    <td><input type="text" name="tags4" placeholder="Empty" required></td>
+                                    <td>
+                                    <select type="text" name="tag4" placeholder="Empty">
+                                            <?php
+                                                $sql = "SELECT tag FROM tags";
+                                                $stmt = $conn->prepare($sql);
+                                                $stmt->execute();
+                                                while ($op = $stmt->fetch()){
+                                                    $tag = $op['tag'];
+                                                    echo '<option value="'.$tag.'">'.$tag.'</option>';
+                                                }
+                                            ?>
+                                        </select>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Tag-5</td>
-                                    <td><input type="text" name="tags5" placeholder="Empty" required></td>
+                                    <td>
+                                    <select type="text" name="tag5" placeholder="Empty">
+                                            <?php
+                                                require_once('../config/setup.php');
+                                                $sql = "SELECT tag FROM tags";
+                                                $stmt = $conn->prepare($sql);
+                                                $stmt->execute();
+                                                while ($op = $stmt->fetch()){
+                                                    $tag = $op['tag'];
+                                                    echo '<option value="'.$tag.'">'.$tag.'</option>';
+                                                }
+                                            ?>
+                                        </select>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td><button type="submit" name="submit">SUBMIT</button></td>

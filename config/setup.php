@@ -47,11 +47,11 @@
             tag4 VARCHAR(20) NOT NULL DEFAULT 'empty',
             tag5 VARCHAR(20) NOT NULL DEFAULT 'empty'
         ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin";
-    
+
         $conn->exec($sql);
 
         $sql = "CREATE TABLE IF NOT EXISTS tags (
-            userid INT(7) UNSIGNED NOT NULL PRIMARY KEY,
+            id INT(7) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
             tag VARCHAR(20) NOT NULL DEFAULT 'empty'
         ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin";
     
@@ -74,6 +74,64 @@
     
         $conn->exec($sql);
         //echo "profilelikes table created successfully<br>";
+        $sql = "SELECT COUNT(*) tag FROM tags";
+        $res = $conn->query($sql);
+        if ($res->fetchColumn() <= 0) {
+            $sql = "INSERT INTO `tags` (`tag`) VALUES
+        ('ART'),
+        ('ANIME'),
+        ('BABY'),
+        ('BEACH'),
+        ('BEAUTIFUL'),
+        ('BEAUTY'),
+        ('BLACKANDWHITE'),
+        ('CATS'),
+        ('CHRISTMAS'),
+        ('CUTE'),
+        ('DESIGN'),
+        ('DOGS'),
+        ('DRAWING'),
+        ('FAMILY'),
+        ('FASHION'),
+        ('FITNESS'),
+        ('FLOWERS'),
+        ('FOOD'),
+        ('FUN'),
+        ('FUNNY'),
+        ('GAMING'),
+        ('GYM'),
+        ('H3H3'),
+        ('HAPPY'),
+        ('HEALTHY'),
+        ('HOME'),
+        ('INSTAGOOD'),
+        ('INSTAGRAM'),
+        ('INSTALIKE'),
+        ('LIFE'),
+        ('LIFESTYLE'),
+        ('LOVE'),
+        ('MODEL'),
+        ('MOTIVATION'),
+        ('MUSIC'),
+        ('NATURE'),
+        ('NIGHT'),
+        ('PARTY'),
+        ('PEWDIEPIE'),
+        ('PHOTOGRAPHY'),
+        ('SELFIE'),
+        ('SKYNCLOUDS'),
+        ('STYLE'),
+        ('SUMMER'),
+        ('SUNSET'),
+        ('TRAVEL'),
+        ('WORK'),
+        ('WORKOUT'),
+        ('YOUTUBE')
+        ;";
+
+	$conn->query($sql);
+        }
+        
     }
     catch(PDOException $e) {
         echo "Table creation failed: " . $e->getMessage() . "<br>";
