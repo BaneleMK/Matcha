@@ -10,6 +10,7 @@
         justify-content: space-evenly;
         width: 100%;
         padding-top:20px;
+
         margin-top:30px;
     }
     
@@ -330,6 +331,9 @@
         /*background-image: linear-gradient(gray, white);*/
     }
 
+    td{
+        border: 2px solid #AAAAAA;
+    }
     nvli a:hover {
         color: red;
         background-color: white;

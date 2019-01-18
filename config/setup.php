@@ -28,12 +28,13 @@
                 profilelocation VARCHAR(100),
                 reallocation VARCHAR(100),
                 sexuality VARCHAR(15) NOT NULL DEFAULT 'Bisexual',
-                Fame INT(7) UNSIGNED,
-                Age INT(3) UNSIGNED,
+                Fame INT(7) UNSIGNED DEFAULT 0,
+                age INT(3) UNSIGNED,
                 profilepic INT(1) UNSIGNED,
                 user_state VARCHAR(30) NOT NULL DEFAULT 'unregistered',
                 comment_notifications VARCHAR(4) NOT NULL DEFAULT 'ON',
-                verificationcode INT(7) UNSIGNED NOT NULL
+                verificationcode INT(7) UNSIGNED NOT NULL,
+                bio VARCHAR(500) NOT NULL DEFAULT 'Yo, this is my empty bio yey'
             ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin";
         
         $conn->exec($sql);
@@ -66,6 +67,14 @@
     
         $conn->exec($sql);
         //echo "messages table created successfully<br>";
+        $sql = "CREATE TABLE IF NOT EXISTS matches (
+            id INT(7) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            matchid INT(7) UNSIGNED NOT NULL,
+            seekerid INT(7) UNSIGNED NOT NULL,
+            result INT(1) UNSIGNED NOT NULL
+        ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin";
+    
+        $conn->exec($sql);
 
         $sql = "CREATE TABLE IF NOT EXISTS profilelikes (
             userid INT(7) UNSIGNED NOT NULL,

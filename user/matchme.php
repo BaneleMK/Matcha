@@ -1,19 +1,15 @@
 <?php
 
 session_start();
-if (!isset($_SESSION['username'])) {
-    header("Location: ../login/login.php");
-    exit();
-}
+
 ?>
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Trender-comments</title>
-        <link rel="stylesheet" href="../css/mystyles.css">
-        <meta charset="UTF-8">
+        <title>Trender-Gallery</title>
+        <link rel="stylesheet" href="../css/mystyles.css">        
     </head>
-    <body bgcolor=red>
+    <body>
         <nv>
             <nvli style="float: left;"><a href="../index.php">Home</a></nvli>
             <?php
@@ -35,64 +31,52 @@ if (!isset($_SESSION['username'])) {
         </nv>
         <div class="mainbox">
             <div class="subbox">
-                    
-                <div class="picbox">
-                <?php
-                    if (isset($_GET['post'])){
-                        require_once('../config/setup.php');
-                        
-                        $post = $_GET['post'];
+                <div class="columnflexbox">
+                    <table style="border: 4px solid #FF1111; background-color: #EEEEEE;">
+                        <tr>
+                            <td><img src="../uploads/1.prof.png" alt="picture->img link"></td>
+                            <td><?php 
+                                require_once("../config/setup.php");
 
-                        $stmt = $conn->prepare("SELECT * FROM posts WHERE id = $post ");
-                        $stmt->execute();
+                                $userid = $_GET['id'];
+                                $sql = "SELECT * FROM users where id = $userid";
+                                $stmt = $conn->prepare($sql);
+                                $stmt->execute();
+                                $sql = "SELECT * FROM usertags where userid = $userid";
+                                $stmt2 = $conn->prepare($sql);
+                                $stmt2->execute();
 
-                        $row = $stmt->fetch();
-                        echo '
-                        <div class="postflexbox">
-                            <table>
-                                <tr>
-                                    <td colspan=2><img src="../uploads/' . $row['picture'] . '" class="postimages" </td>
-                                </tr>
-                                <tr>
-                                    <td>@' . $row['username'] . ' </td>
-                                </tr>
-                                <tr>
-                                    <td>' . $row['Fame'] 'Likes</a></td>
-                                    <td><a href="comments.php?post="> LIKE </td>
-                                    <td><a href="comments.php?post="> PASS </td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div class="commentflexbox">
-                            <form>
-                                <table class=table>
-                                        <tr>
-                                            <td><h3>Comment</h3></td>
-                                            <td><textarea rows="3" cols="50" name="comment_text" form="commentform" required placeholder="Hey, say something :D (max chars:255)"></textarea></td>
-                                        </tr>
-                                        <tr>
-                                           <td><button type="submit" name="submit" required>post comment</button></td>
-                                       </tr>
-                                </table>
-                            </form>
-                        </div>';
+                                $info = $stmt->fetch();
+                                echo '
+                                Name:'.$info['firstname'].'<br>
+                                Surname:'.$info['lastname'].'<br>
+                                Age:'.$info['age'].'<br>
+                                Gender:'.$info['gender'].'<br>
+                                Fame:'.$info['Fame'].'<br>
+                                bio:' . $info['bio'] . "<br>";
 
-                        $stmt = $conn->prepare("SELECT * FROM user_comments WHERE postid = $post");
-                        $stmt->execute();
-
-                        echo '
-                        <div class="commentflexbox" style="height:650">';
-                        while ($com = $stmt->fetch()) {
-                            echo '<div class="commentflexbox" style="height:50px ; width=90%;background-color: #EEEEEE;">
-                        ' . $com['username'] . ': ' . $com['comment_text'] . '
-                            </div>';
-                        }
-                        echo '</div>';
-                    } else {
-                        header("Location : ../index.php");
-                        exit();
-                    }
-                ?>
+                                $tag = $stmt2->fetch();
+                                echo '#'.$tag['tag1'].' |'.'#'.$tag['tag2'].' |'.'#'.$tag['tag3'].' |'.'#'.$tag['tag4'].' |'.'#'.$tag['tag5'];
+                                    
+                            ?></td>
+                        </tr>
+                        <tr>
+                            <td colspan=2>additional pic one
+                            additional pic two
+                            additional pic three
+                            additional pic four
+                            additional pic V</td>
+                        </tr>
+                        <tr>
+                            <?php
+                                $id = $_GET['id'];
+                                echo '
+                                <td><a href="matchmeresults.info.php?result=yes&id='.$id.'"> Like </a></td>
+                                <td><a href="matchmeresults.info.php?result=no&id='.$id.'"> Pass </a></td>
+                                ';
+                            ?>
+                        </tr>
+                    </table>
                 </div>
             </div>   
         </div>
