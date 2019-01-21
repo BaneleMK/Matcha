@@ -7,9 +7,11 @@
         $seekerid = $_SESSION['id'];
         $matchid = $_GET['id'];
 
-        $sql "SELECTCOUNT(*)"
-        if () {
-
+        $sql = "SELECT COUNT(*) id FROM matches WHERE matchid = '$matchid' AND seekerid = '$seekerid'";
+        $stmt = $conn->query($sql);
+        if ($stmt->fetchColumn() > 0) {
+            header("Location: matchme.info.php");
+            exit();
         } else {
             $sql = "INSERT INTO matches (matchid, seekerid, result) 
             VALUES (:matchid, :seekerid, :result)";

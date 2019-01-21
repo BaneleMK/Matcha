@@ -29,31 +29,33 @@
             $stmt = $conn->prepare($sql);
             $stmt->execute();
             $match = $stmt->fetch();
-        }
+        } 
         
         if ($match['id']) {
             $matchid = $match['id'];
-            $stmt2 = $conn->prepare("SELECT result FROM matches WHERE seekerid = 4 & matchid = 4");
+            $stmt2 = $conn->prepare("SELECT id FROM matches WHERE seekerid = '$userid' AND matchid = '$matchid'");
             $stmt2->execute();
             $valid = $stmt2->fetch();
 
-            if ($valid['id']) {
+            echo "id = ".$valid['id'];
+            print_r($valid);
+            if (isset($valid)) {
                 for($i=0; $match = $stmt->fetch(); $i++) {
                     $matchid = $match['id'];
                     $stmt2->execute();
                     $valid = $stmt2->fetch();
 
                     if (!$valid['id']) {
-                        header("Location: matchme.php?id=".$match['id']);
+                        header("Location: matchme.php?id=".$matchid.'&num='.$i);
                         exit();        
                     }
                 }
                 if (!$match['id']) {
-                    header("Location: matchme.php?nomatchanymore");
+                    header("Location: matchme.php?nomatchanymore1");
                     exit();
                 }
             } else {
-                header("Location: matchme.php?id=".$match['id']);
+                //header("Location: matchme.php?nomatchanymore2&".$valid['id']);
                 exit();
             }
         } else {

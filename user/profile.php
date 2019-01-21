@@ -156,7 +156,7 @@ if (!isset($_SESSION['username'])) {
                                         $sexuality = $op['sexuality'];
                                         echo '<option value="'.$sexuality.'">'.$sexuality.'</option>';
                                     ?>
-                                        <option value="Biosexual">Biosexual</option>
+                                        <option value="Bisexual">Bisexual</option>
                                         <option value="Homosexual">Homosexual</option>
                                         <option value="Hetrosexual">Hetrosexual</option>
                                     </select></td>
