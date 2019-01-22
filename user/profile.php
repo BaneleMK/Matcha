@@ -115,6 +115,7 @@ if (!isset($_SESSION['username'])) {
                                                         <option value="ON">ON</option>
                                                     </select>';
                                             }
+                                            
                                         ?>
                                     </td>
                                 </tr>
@@ -178,12 +179,34 @@ if (!isset($_SESSION['username'])) {
                                                 echo '<option value="'.$age.'">'.$age.'</option>';
                                                 $age++;
                                             }
+                                            
                                         ?>
                                     </select></td>
                                 </tr>
                                 <tr>
                                     <td>Location</td>
                                     <td><input type="text" name="location" value='N/A' required></td>
+                                </tr>
+                                <tr>
+                                    <td>Tag matching</td>
+                                    <td>
+                                    <select type="text" name="tagmatching" placeholder="Empty">
+                                        <?php
+                                            $sql = "SELECT tagmatching FROM users WHERE id = $id";
+                                            $stmt = $conn->prepare($sql);
+                                            $stmt->execute();
+                                            $op = $stmt->fetch();
+
+                                            if ($op['tagmatching']){
+                                                echo '<option value=1>YEAH</option>
+                                                <option value=0>NO PLEASE NO</option>';
+                                            } else {
+                                                echo '<option value=0>NO PLEASE NO</option>
+                                                <option value=1>YEAH</option>';
+                                            }
+                                        ?>
+                                    </select>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td><button type="submit" name="submit">SUBMIT</button></td>

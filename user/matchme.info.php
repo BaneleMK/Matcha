@@ -2,80 +2,88 @@
 
     session_start();
     
-    require_once("../config/setup.php");
-    include("../functions/sanitize.php");
-    if (isset($_SESSION['id'])) {
-        try {
-            //code...
-        // GENDER & SEX PREF MATCHING
-        $userid = $_SESSION['id'];
-        $sql = "SELECT * FROM users WHERE id = $userid";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();
-        $seeker = $stmt->fetch();
+    function tagmatch ($matchid, $seekerid, $conn) {
+        $sql = "SELECT tag1, tag2, tag3, tag4, tag5 FROM usertags WHERE userid = '$matchid'";
+        $stmt1 = $conn->prepare($sql);
+        $stmt1->execute();
+        $tags1 = $stmt1->fetch();
 
-        if ($seeker['sexuality'] == 'Homosexual') {
-            $sql = "SELECT id FROM users WHERE id != $userid, gender = ".$seeker['gender'];
-            $stmt = $conn->prepare($sql);
-            $stmt->execute();
-            $match = $stmt->fetch();
-        } else if ($seeker['sexuality'] == 'Hetrosexual') {
-            $sql = "SELECT id FROM users WHERE id != $userid, gender != ".$seeker['gender'];
-            $stmt = $conn->prepare($sql);
-            $stmt->execute();
-            $match = $stmt->fetch();
-        } else {
-            $sql = "SELECT id FROM users WHERE id != $userid";
-            $stmt = $conn->prepare($sql);
-            $stmt->execute();
-            $match = $stmt->fetch();
-        } 
-        
-        if ($match['id']) {
-            $matchid = $match['id'];
-            $stmt2 = $conn->prepare("SELECT id FROM matches WHERE seekerid = '$userid' AND matchid = '$matchid'");
-            $stmt2->execute();
-            $valid = $stmt2->fetch();
+        $sql = "SELECT tag1, tag2, tag3, tag4, tag5 FROM usertags WHERE userid = '$seekerid'";
+        $stmt2 = $conn->prepare($sql);
+        $stmt2->execute();
+        $tags2 = $stmt2->fetch();
 
-            echo "id = ".$valid['id'];
-            print_r($valid);
-            if (isset($valid)) {
-                for($i=0; $match = $stmt->fetch(); $i++) {
-                    $matchid = $match['id'];
-                    $stmt2->execute();
-                    $valid = $stmt2->fetch();
-
-                    if (!$valid['id']) {
-                        header("Location: matchme.php?id=".$matchid.'&num='.$i);
-                        exit();        
-                    }
-                }
-                if (!$match['id']) {
-                    header("Location: matchme.php?nomatchanymore1");
-                    exit();
-                }
-            } else {
-                //header("Location: matchme.php?nomatchanymore2&".$valid['id']);
-                exit();
-            }
-        } else {
-            header("Location: matchme.php?nomatch");
+        $results = array_intersect($tags1, $tags2);
+        if ($results) {
+            echo 'SUGOI DESU!!!!!!!!!!!! <br>';
+            header("Location: matchme.php?id=$matchid");
             exit();
         }
-        } catch (\Throwable $th) {
-            echo $th;
-        }
-        /*
-        $sql = "SELECT * FROM users WHERE userid = $userid";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();
+    }
 
-        /* TAG MATCHING */
-        /*$sql = "SELECT * FROM usertags where userid = $userid";
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();
-        */
-    } else {
-        header("Location: ../login/login.php");
-        exit();
+    require_once("../config/setup.php");
+    include("../functions/sanitize.php");
+    try {
+        if (isset($_SESSION['id'])) {
+            // GENDER & SEX PREF MATCHING
+            $seekerid = $_SESSION['id'];
+            $sql = "SELECT * FROM users WHERE id = $seekerid";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+
+            $seeker = $stmt->fetch();
+            $seekergen = $seeker['gender'];
+            $seekertag = $seeker['tagmatching'];
+
+            if ($seeker['sexuality'] == 'Homosexual') {
+                $sql = "SELECT id FROM users WHERE id != '$seekerid' AND gender = '$seekergen'";
+                $stmt = $conn->prepare($sql);
+                $stmt->execute();
+                $match = $stmt->fetch();
+            } else if ($seeker['sexuality'] == 'Hetrosexual') {
+                $sql = "SELECT id FROM users WHERE id != '$seekerid' AND gender != '$seekergen'";
+                $stmt = $conn->prepare($sql);
+                $stmt->execute();
+                $match = $stmt->fetch();
+            } else {
+                $sql = "SELECT id FROM users WHERE id != '$seekerid'";
+                $stmt = $conn->prepare($sql);
+                $stmt->execute();
+                $match = $stmt->fetch();
+            }
+
+            $matchid = $match['id'];
+            while ($match['id']) {
+                $sql = "SELECT id FROM matches WHERE seekerid = '$seekerid' AND matchid = '$matchid'";
+                $stmt1 = $conn->prepare($sql);
+                $stmt1->execute();
+                $valid = $stmt1->fetch();
+                $validid = $valid['id'];
+
+                echo 'match id  = '.$matchid.' for the seeker with id ='.$seekerid.'<br> valid id = '.$validid.' <br>';
+                if ($valid['id']) {
+                    // echo 'not a match, sorry. NEXT!!!!!!!!!!!<br>';
+                    $match = $stmt->fetch();
+                    $matchid = $match['id'];
+                } else {
+                    // echo 'We can match this peace! ';
+                    if ($seekertag) {
+                        echo 'Boss ah we need to check the tags 1st for this one :D <br>';
+                        tagmatch($matchid, $seekerid, $conn);
+                        $match = $stmt->fetch();
+                        $matchid = $match['id'];
+                    } else {
+                        header("Location: matchme.php?id=$matchid");
+                        exit();
+                    }
+                }
+            }
+            header("Location: matchme.php?sorryson-nomore");
+            exit();
+        } else {
+            header("Location: ../login/login.php");
+            exit();
+        }
+    } catch (\Throwable $th) {
+        echo $th;
     }

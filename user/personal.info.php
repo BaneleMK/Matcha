@@ -9,11 +9,12 @@
         $age = sanitize($_POST['age']);
         $sexuality = sanitize($_POST['sexuality']);
         $gender = sanitize($_POST['gender']);
+        $tag = sanitize($_POST['tagmatching']);
         
         //location just opens up too many attacks
         //$location = $_POST['location'];
 
-        $sql = "UPDATE users SET age = $age, sexuality = '$sexuality', gender = '$gender' WHERE id = '$id'";
+        $sql = "UPDATE users SET age = $age, sexuality = '$sexuality', gender = '$gender', tagmatching = '$tag' WHERE id = '$id'";
         $stmt = $conn->prepare($sql);
         $stmt->execute();
 
