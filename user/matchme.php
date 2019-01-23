@@ -34,11 +34,19 @@ session_start();
                 <div class="columnflexbox">
                     <table style="border: 4px solid #FF1111; background-color: #EEEEEE;">
                         <tr>
-                            <td><img src="../uploads/1.prof.png" alt="picture->img link"></td>
-                            <td><?php 
+                            <td><img src="<?php 
                                 require_once("../config/setup.php");
-
                                 $userid = $_GET['id'];
+
+                                $sql = "SELECT picture FROM pics WHERE userid = '$userid' AND picrole = 'profile'";
+                                $stmt = $conn->prepare($sql);
+                                $stmt->execute();
+
+                                $pic = $stmt->fetch();
+                                echo $pic['picture'];
+                            req?>" width=200px height=200px alt="picture->img link"></td>
+                            <td><?php 
+
                                 $sql = "SELECT * FROM users where id = $userid";
                                 $stmt = $conn->prepare($sql);
                                 $stmt->execute();
@@ -61,11 +69,27 @@ session_start();
                             ?></td>
                         </tr>
                         <tr>
-                            <td colspan=2>additional pic one
-                            additional pic two
-                            additional pic three
-                            additional pic four
-                            additional pic V</td>
+                            <td colspan=2>
+                                <div class="thumbnailflexbox" style="height:270px">
+                                    <?php
+                                        require_once('../config/setup.php');
+
+                                        $id = $_GET['id'];
+                                        $stmt = $conn->prepare("SELECT * FROM pics WHERE userid = '$id' ORDER BY picid DESC");
+                                        $stmt->execute();
+                                        $row = $stmt->fetchAll();
+
+                                        // $postnumber = the amount of posts per pagination
+                                        $totalposts = sizeof($row);
+                                        for ($cp = 0; $cp < $totalposts; $cp++) {
+                                            echo '
+                                            <a href="comments.php?post=' . $row[$cp]['id'] . '">
+                                                <img src="../uploads/' . $row[$cp]['picture'] . '" width=220 height=220>
+                                            </a>';
+                                        }
+                                    ?>
+                                </div>
+                            </td>
                         </tr>
                         <tr>
                             <?php

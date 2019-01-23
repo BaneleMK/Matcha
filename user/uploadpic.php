@@ -6,6 +6,8 @@
 
             // echo 'one';
             $webcamimage = 0;
+            $picrole = $_POST['picrole'];
+
             if (isset($_FILES['file'])) {
                 echo '2';
                 $file = $_FILES['file'];
@@ -100,8 +102,8 @@
 
                     // add to database the user and their image file
                     
-                    $username = $_SESSION['username'];
-                    $sql = "INSERT INTO posts (username, picture) VALUES ('$username', '$image_storage_name')";
+                    $userid = $_SESSION['id'];
+                    $sql = "INSERT INTO pics (userid, picture, picrole) VALUES ('$userid', '$image_storage_name', '$picrole')";
                     $stmt = $conn->prepare($sql);
                     $stmt->execute();
                     

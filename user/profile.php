@@ -339,17 +339,7 @@ if (!isset($_SESSION['username'])) {
                         </form>
                         </div>
                         <div class="formflexbox" style="background-color: #FFFFFF">
-                            <form action="profileinfo.php" method="POST">
-                                <table>
-                                    <tr>
-                                        <td>Profile Picture</td>
-                                        <td><input type="file" name="profilepic" required></td>
-                                    </tr>
-                                    <tr>
-                                        <td><button type="submit" name="submit">SUBMIT</button></td>
-                                    </tr>
-                                </table>
-                            </form>
+                            <a href="post.php">update your proflie pic</a>
                         </div>
                         <div class="formflexbox" style="background-color: #FFFFFF">
                             <form action="personal.info.php?bio" method="POST" id="bioform">
@@ -380,11 +370,47 @@ if (!isset($_SESSION['username'])) {
                         <div class="formflexbox" style="background-color: #FFFFFF">
                             <form action="profileinfo.php" method="POST">
                                 <h1>Pasts likes from people</h1>
+                                <?php
+                                    $id = $_SESSION['id'];
+                                    $sql = "SELECT seekerid FROM matches WHERE  matchid = '$id' AND result = '1' ORDER BY id DESC";
+                                    $stmt = $conn->prepare($sql);
+                                    $stmt->execute();
+                                    
+                                    while ($person = $stmt->fetch()){
+                                        $seekerid = $person['seekerid'];
+                                        $sql = "SELECT username FROM users WHERE id = '$seekerid'";
+                                        $stmt2 = $conn->prepare($sql);
+                                        $stmt2->execute();
+
+                                        $seeekerinfo = $stmt2->fetch();
+                                        $seekername = $seeekerinfo['username'];
+
+                                        echo '<div class=usernameflexbox>'.$seekername.'</div>';
+                                    }
+                                ?>
                             </form>
                         </div>
                         <div class="formflexbox" style="background-color: #FFFFFF">
                             <form action="profileinfo.php" method="POST">
                                 <h1>Pasts views from people</h1>
+                                <?php
+                                    $id = $_SESSION['id'];
+                                    $sql = "SELECT seekerid FROM matches WHERE  matchid = '$id' ORDER BY id DESC";
+                                    $stmt = $conn->prepare($sql);
+                                    $stmt->execute();
+                                    
+                                    while ($person = $stmt->fetch()){
+                                        $seekerid = $person['seekerid'];
+                                        $sql = "SELECT username FROM users WHERE id = '$seekerid'";
+                                        $stmt2 = $conn->prepare($sql);
+                                        $stmt2->execute();
+
+                                        $seeekerinfo = $stmt2->fetch();
+                                        $seekername = $seeekerinfo['username'];
+
+                                        echo '<div class=usernameflexbox>'.$seekername.'</div>';
+                                    }
+                                ?>
                             </form>
                         </div>
                         <div class="formflexbox" style="background-color: #FFFFFF; height: 80px">
@@ -398,11 +424,6 @@ if (!isset($_SESSION['username'])) {
                                     $fame = $stmt->fetch();
                                     echo $fame['Fame'];
                                     ?></h1>
-                            </form>
-                        </div>
-                        <div class="formflexbox" style="background-color: #FFFFFF">
-                            <form action="profileinfo.php" method="POST">
-                                <h1>Pasts views from people</h1>
                             </form>
                         </div>
                         </div>

@@ -83,6 +83,16 @@
     
         $conn->exec($sql);
         //echo "profilelikes table created successfully<br>";
+
+        $sql = "CREATE TABLE IF NOT EXISTS pics (
+            picid INT(7) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            userid INT(7) UNSIGNED NOT NULL,
+            picture TEXT NOT NULL,
+            picrole VARCHAR(20) NOT NULL
+        ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin";
+    
+        $conn->exec($sql);
+        //echo "pics table created successfully<br>";
         $sql = "SELECT COUNT(*) tag FROM tags";
         $res = $conn->query($sql);
         if ($res->fetchColumn() <= 0) {

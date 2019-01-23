@@ -188,7 +188,7 @@
         flex-direction: row;
         flex-wrap: wrap;
         width: 90%;
-        height: 350px;
+        height: 330px;
         align-items: center;
         justify-content: center;
         overflow-y: auto;
@@ -219,6 +219,20 @@
         flex-direction: row;
         width: 90%;
         height: 170px;
+        align-items: center;
+        justify-content: center;
+        overflow-y: auto;
+    }
+    
+    .usernameflexbox{
+        border-radius: 5px;
+        border: #25323b solid thin;
+        display: flex;
+        background-color: rgb(35, 196, 245);
+        flex-wrap: wrap;
+        flex-direction: row;
+        width: 90%;
+        height: 20px;
         align-items: center;
         justify-content: center;
         overflow-y: auto;

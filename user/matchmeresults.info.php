@@ -19,12 +19,27 @@
             $stmt = $conn->prepare("$sql");
             $stmt->bindParam(':matchid', $matchid);
             $stmt->bindParam(':seekerid', $seekerid);
+            
+            // increase the fame level
+            $sql = "SELECT fame FROM users WHERE id = '$matchid'";
+            $stmt2 = $conn->prepare($sql);
+            $stmt2->execute();
 
+            $fame = $stmt2->fetch();
             if ($_GET['result'] == 'yes'){
                 $results = 1;
+                $newfame = $fame['fame'] + 10;
             } else {
                 $results = 0;
+                $newfame = $fame['fame'] + 3;
             }
+
+            $sql = "INSERT INTO matches (fame) VALUES (:fame)";
+                $stmt2 = $conn->prepare("$sql");
+
+                $stmt2->bindParam(':fame', $newfame);
+                $stmt2->execute();
+
             $stmt->bindParam(':result', $results);
             $stmt->execute();
         }
