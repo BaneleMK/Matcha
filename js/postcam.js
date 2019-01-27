@@ -48,12 +48,25 @@ navigator.mediaDevices.getUserMedia({video: true, audio: false})
         }
     }, false);
 
+    $("#picupload").click(function() {
+        $("#picmethod").html("<table>\
+        <tr><td><img src=''></td></tr><tr><td><input type=file name=file id=filetouploud></td></tr>\
+        </table>");
+    });
+
+    $("#filetouploud").change(function() {
+        console.log('something changed boss');            
+        var image = $("#filetouploud").val();
+        $("img").attr("src", image);
+    });
+
+    /*
     picupload.addEventListener('click', function(event){
         console.log('clicked on upload');
         document.getElementById("picmethod").innerHTML = "<input type=file name=file>";
         event.preventDefault();
     }, false);
-
+    */
     webcam.addEventListener('click', function(event){
         console.log('clicked on webcam');
         document.getElementById("picmethod").innerHTML = "<video id=video>There was an error in getting the camera feed.<br></video>";

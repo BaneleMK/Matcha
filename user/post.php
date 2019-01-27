@@ -12,6 +12,7 @@ if (!isset($_SESSION['username'])) {
         <title>Trender-post</title>
         <link rel="stylesheet" href="../css/mystyles.css">   
         <meta charset="UTF-8">   
+        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     </head>
     <body>
         <nv>
