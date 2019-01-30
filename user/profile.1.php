@@ -50,20 +50,18 @@ if (!isset($_SESSION['username'])) {
           </nav>
         <div class="container">
                     <form action="profileinfo.php" method="POST">
-                            <table class=table>
-                                <tr>
-                                    <td>new username:</td>
-                                    <td><input type="text" name="newusername" required></td>
-                                </tr>
-                                <tr>
-                                    <td>password:</td>
-                                    <td><input type="password" name="password" required></td>
-                                </tr>
-                                <tr>
-                                    <td><button type="submit" name="submit">SUBMIT</button></td>
-                                </tr>
-                            </table>
+                            <div class="form-group">
+                                <label for="newusername">New Username</label>
+                                <input type="text" class="form-control" name="newusername" id="Email1" aria-describedby="emailHelp" placeholder="Enter email">
+                                <small id="emailHelp" class="form-text text-muted">Plese make it different, dont be trollin kay.</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="Password">Password</label>
+                                <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
+                        <hr/>
                         <form action="profileinfo.php" method="POST">
                             <div class="form-group">
                                 <label for="oldpassword">Current Password:</label>
@@ -76,26 +74,24 @@ if (!isset($_SESSION['username'])) {
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
+                        <hr/>
                         <form action="profileinfo.php" method="POST">
-                            <hr/>
-                            <table class=table>
-                                <tr>
-                                    <td>old password:</td>
-                                    <td><input type="password" name="oldpassword" required></td>
-                                </tr>
-                                <tr>
-                                    <td>new password:</td>
-                                    <td><input type="password" name="newpassword" required></td>
-                                </tr>
-                                <tr>
-                                    <td>new password verification:</td>
-                                    <td><input type="password" name="newpassword_vr" required></td>
-                                </tr>
-                                <tr>
-                                    <td><button type="submit" name="submit">SUBMIT</button></td>
-                                </tr>
-                            </table>
+                            <div class="form-group">
+                                <label for="oldpassword">Current Password:</label>
+                                <input type="email" class="form-control" name="oldpassword" id="Email1" aria-describedby="emailHelp" placeholder="Enter email">
+                                <small id="emailHelp" class="form-text text-muted">You need to verify from the new email in order to activate it.</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="newPassword">New Password</label>
+                                <input type="password" name="newpassword" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                            </div>
+                            <div class="form-group">
+                                <label for="newPassword">New Password verification</label>
+                                <input type="password" name="newpassword_vr" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
+                        <hr/>
                         <form action="profileinfo.php" method="POST">
                             <div class="form-group">
                                 <label for="Email">Email address</label>
@@ -108,42 +104,27 @@ if (!isset($_SESSION['username'])) {
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
+                        <hr/>
                         <form action="profileinfo.php" method="POST">
                             <hr/>
-                            <table class=table>
-                                <tr>
-                                    <td>email comment notification:</td>
-                                    <td>
-                                        <?php
-                                            require_once("../config/setup.php");
-                                            $username = $_SESSION['username'];
-                                            $stmt = $conn->prepare("SELECT * FROM users WHERE username ='$username'");
-                                            $stmt->execute();
-                                            $row = $stmt->fetch();
-
-                                            echo 'current status: '. $row['comment_notifications'];
-
-                                            if ($row['comment_notifications'] != 'OFF') {
-                                                echo '
-                                                    <select name="comment_notifications">
-                                                        <option value="ON">ON</option>
-                                                        <option value="OFF">OFF</option>
-                                                    </select>';
-                                            } else {
-                                                echo '
-                                                    <select name="comment_notifications">
-                                                        <option value="OFF">OFF</option>
-                                                        <option value="ON">ON</option>
-                                                    </select>';
-                                            }
-                                            
-                                        ?>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><button type="submit" name="submit">SUBMIT</button></td>
-                                </tr>
-                            </table>
+                            <div class="form-group">
+                                <label for="Email notification">Email notification</label>
+                                <small id="emailHelp" class="form-text text-muted">
+                                <?php
+                                /*$username = $_SESSION['username'];
+                                $stmt = $conn->prepare("SELECT * FROM users WHERE username ='$username'");
+                                $stmt->execute();
+                                $row = $stmt->fetch();
+*/
+                                echo 'current status: ';//. $row['comment_notifications'];
+                                ?>
+                                </small>
+                                <select name="comment_notifications">
+                                    <option value="ON">ON</option>
+                                    <option value="OFF">OFF</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
                         <form action="personal.info.php?pref" method="POST">
                             <table class=table>

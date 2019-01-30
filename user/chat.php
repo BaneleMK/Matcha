@@ -2,10 +2,11 @@
 
 session_start();
 
-if (!isset($_SESSION['username'])) {
+if (!isset($_SESSION['id'])) {
     header("Location: ../index.php");
 }
-
+require_once('../config/setup.php');
+include_once('../functions/sanitize.php');
 ?>
 
 <!DOCTYPE html>
@@ -31,7 +32,7 @@ if (!isset($_SESSION['username'])) {
                   <a class="nav-link" href="profile.php">User <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="chat.html">Chat</a>
+                  <a class="nav-link" href="chat.php">Chat</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="matchme.info.php">Match-Me-Now</a>
@@ -50,7 +51,18 @@ if (!isset($_SESSION['username'])) {
           </nav>
           
         <div class="container">
-            <h1>Chat W/'contactname'</h1>
+            <h1>Chat W/<?php
+
+            $id = $_GET['receiverid'];
+
+            $sql = "SELECT * FROM users WHERE id = $id";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+
+            $res = $stmt->fetch();
+            
+            echo $res['username'];
+            ?></h1>
         </div>
 
         <div class="container">
@@ -59,12 +71,15 @@ if (!isset($_SESSION['username'])) {
                 <div class="align-self-end"">ey dude</br> yep</div>
                 <div class="align-self-start">okay dude</div>
             </div>
+            <form action="chat.info.php?">
             <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="feel free to type here" aria-label="Recipient's username" aria-describedby="button-addon2">
+                <input hidden value="<?php echo $id?>">
+                <input type="text" name="textmessage" class="form-control" placeholder="feel free to type here" aria-label="Recipient's username" aria-describedby="button-addon2">
                 <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button" id="button-addon2">Send it</button>
+                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Send it</button>
                 </div>
             </div>
+            </form>
         </div>
     <!--js for bootstrap-->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

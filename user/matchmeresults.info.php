@@ -26,7 +26,24 @@
             $stmt2->execute();
 
             $fame = $stmt2->fetch();
-            if ($_GET['result'] == 'yes'){
+            if ($_GET['result'] == 'yes') {
+                // make a new chat link if they both like each other.
+                $sql = "SELECT COUNT(*) id FROM matches WHERE matchid = '$seekerid' AND seekerid = '$matchid'";
+                $stmt3 = $conn->query($sql);
+                if ($stmt3->fetchColumn() > 0) {
+                    // check if it already exists or something
+                    $sql = "SELECT COUNT(*) FROM chats WHERE id1 = '$seekerid' AND id2 = '$matchid'";
+                    $res1 = $conn->query($sql);
+                    $sql = "SELECT COUNT(*) FROM chats WHERE id2 = '$seekerid' AND id1 = '$matchid'";
+                    $res2 = $conn->query($sql);
+
+                    if (($res1->fetchColumn() == 0) && ($res2->fetchColumn() == 0)) {
+                        $sql = "INSERT INTO chats (id1, id2) VALUES(:matchid, seekerid)";
+                        $stmt3->bindParam(':matchid', $matchid);
+                        $stmt3->bindParam(':seekerid', $seekerid);
+                        $stmt3->execute();
+                    }
+                }       
                 $results = 1;
                 $newfame = $fame['fame'] + 10;
             } else {
@@ -35,10 +52,10 @@
             }
 
             $sql = "INSERT INTO matches (fame) VALUES (:fame)";
-                $stmt2 = $conn->prepare("$sql");
+            $stmt2 = $conn->prepare("$sql");
 
-                $stmt2->bindParam(':fame', $newfame);
-                $stmt2->execute();
+            $stmt2->bindParam(':fame', $newfame);
+            $stmt2->execute();
 
             $stmt->bindParam(':result', $results);
             $stmt->execute();

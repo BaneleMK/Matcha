@@ -61,7 +61,7 @@
 
         $sql = "CREATE TABLE IF NOT EXISTS messages (
             messageid INT(7) UNSIGNED NOT NULL,
-            username VARCHAR(30) NOT NULL,
+            receiverid INT(7) UNSIGNED NOT NULL,
             textmessage VARCHAR(255) NOT NULL 
         ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin";
     
@@ -83,6 +83,14 @@
     
         $conn->exec($sql);
         //echo "profilelikes table created successfully<br>";
+
+        $sql = "CREATE TABLE IF NOT EXISTS chats (
+            id1 INT(7) UNSIGNED NOT NULL,
+            id2 INT(7) UNSIGNED NOT NULL
+        ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin";
+    
+        $conn->exec($sql);
+        //echo "profilelikes table created succssfully<br>";
 
         $sql = "CREATE TABLE IF NOT EXISTS pics (
             picid INT(7) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
