@@ -65,6 +65,18 @@ if (!isset($_SESSION['username'])) {
                             </table>
                         </form>
                         <form action="profileinfo.php" method="POST">
+                            <div class="form-group">
+                                <label for="oldpassword">Current Password:</label>
+                                <input type="email" class="form-control" name="oldpassword" id="Email1" aria-describedby="emailHelp" placeholder="Enter email">
+                                <small id="emailHelp" class="form-text text-muted">You need to verify from the new email in order to activate it.</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Password</label>
+                                <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                        <form action="profileinfo.php" method="POST">
                             <hr/>
                             <table class=table>
                                 <tr>
@@ -85,20 +97,16 @@ if (!isset($_SESSION['username'])) {
                             </table>
                         </form>
                         <form action="profileinfo.php" method="POST">
-                            <hr/>
-                            <table class=table>
-                                <tr>
-                                    <td>new email:</td>
-                                    <td><input type="text" name="newemail" required></td>
-                                </tr>
-                                <tr>
-                                    <td>password:</td>
-                                    <td><input type="password" name="password" required></td>
-                                </tr>
-                                <tr>
-                                    <td><button type="submit" name="submit">SUBMIT</button></td>
-                                </tr>
-                            </table>
+                            <div class="form-group">
+                                <label for="Email">Email address</label>
+                                <input type="email" class="form-control" name="newemail" id="Email" aria-describedby="emailHelp" placeholder="Enter email">
+                                <small id="emailHelp" class="form-text text-muted">You need to verify from the new email in order to activate it.</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Password</label>
+                                <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
                         <form action="profileinfo.php" method="POST">
                             <hr/>
