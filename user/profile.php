@@ -7,432 +7,357 @@ if (!isset($_SESSION['username'])) {
 }
 
 ?>
+
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Trender-Profile</title>
-        <link rel="stylesheet" href="../css/mystyles.css">      
-    </head>
-    <body bgcolor=red>
-        <nv>
-            <nvli style="float: left;"><a href="../index.php">Home</a></nvli>
-            <?php
-            if (!isset($_SESSION['id']))
-            {
-                echo '
-                    <nvli><a href="../signup/signup.php">Sign up</a></nvli>
-                    <nvli><a href="../login/login.php">Login</a></nvli>';
-            }
-            else
-            {
-                echo '
-                <nvli><a href="../login/logout.php">Logout</a></nvli>
-                <nvli><a href="socialtab.php">SOCIAL</a></nvli>
-                <nvli><a href="matchme.info.php">MATCH ME</a></nvli>
-                <nvli><a class=active href="profile.php">' . $_SESSION['username'] . '</a></nvli>';
-            }
-            ?>
-        </nv>
-        <div class="mainbox">
-            <div class="subbox">
-                    <div class="formflexbox" style="height:600px; background-color: #FFFFFF">
-                    <form action="profileinfo.php" method="POST">
-                            <table class=table>
-                                <tr>
-                                    <td>new username:</td>
-                                    <td><input type="text" name="newusername" required></td>
-                                </tr>
-                                <tr>
-                                    <td>password:</td>
-                                    <td><input type="password" name="password" required></td>
-                                </tr>
-                                <tr>
-                                    <td><button type="submit" name="submit">SUBMIT</button></td>
-                                </tr>
-                            </table>
-                        </form>
-                        <form action="profileinfo.php" method="POST">
-                            <hr/>
-                            <table class=table>
-                                <tr>
-                                    <td>old password:</td>
-                                    <td><input type="password" name="oldpassword" required></td>
-                                </tr>
-                                <tr>
-                                    <td>new password:</td>
-                                    <td><input type="password" name="newpassword" required></td>
-                                </tr>
-                                <tr>
-                                    <td>new password verification:</td>
-                                    <td><input type="password" name="newpassword_vr" required></td>
-                                </tr>
-                                <tr>
-                                    <td><button type="submit" name="submit">SUBMIT</button></td>
-                                </tr>
-                            </table>
-                        </form>
-                        <form action="profileinfo.php" method="POST">
-                            <hr/>
-                            <table class=table>
-                                <tr>
-                                    <td>new email:</td>
-                                    <td><input type="text" name="newemail" required></td>
-                                </tr>
-                                <tr>
-                                    <td>password:</td>
-                                    <td><input type="password" name="password" required></td>
-                                </tr>
-                                <tr>
-                                    <td><button type="submit" name="submit">SUBMIT</button></td>
-                                </tr>
-                            </table>
-                        </form>
-                        <form action="profileinfo.php" method="POST">
-                            <hr/>
-                            <table class=table>
-                                <tr>
-                                    <td>email comment notification:</td>
-                                    <td>
-                                        <?php
-                                            require_once("../config/setup.php");
-                                            $username = $_SESSION['username'];
-                                            $stmt = $conn->prepare("SELECT * FROM users WHERE username ='$username'");
-                                            $stmt->execute();
-                                            $row = $stmt->fetch();
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+</head>
+<body bgcolor="red">
 
-                                            echo 'current status: '. $row['comment_notifications'];
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Matcher</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                  <a class="nav-link" href="profile.php">User <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="chat.php">Chat</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="matchme.info.php">Match-Me-Now</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Xtra-stuff
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Profile impressions</a>
+                    <a class="dropdown-item" href="#">Profile likers</a>
+                  </div>
+                </li>
+              </ul>
+            </div>
+    </nav>
 
-                                            if ($row['comment_notifications'] != 'OFF') {
-                                                echo '
-                                                    <select name="comment_notifications">
-                                                        <option value="ON">ON</option>
-                                                        <option value="OFF">OFF</option>
-                                                    </select>';
-                                            } else {
-                                                echo '
-                                                    <select name="comment_notifications">
-                                                        <option value="OFF">OFF</option>
-                                                        <option value="ON">ON</option>
-                                                    </select>';
-                                            }
-                                            
-                                        ?>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><button type="submit" name="submit">SUBMIT</button></td>
-                                </tr>
-                            </table>
-                        </form>
-                        </div>
-                        <div class="formflexbox" style="height:290px; background-color: #FFFFFF">
-                        <form action="personal.info.php?pref" method="POST">
-                            <table class=table>
-                                </tr>
-                                    <td>Gender:</td>
-                                    <td><select name="gender">
-                                        <?php
-                                            $id = $_SESSION['id'];
-                                            $sql = "SELECT gender FROM users WHERE id = $id";
-                                            $stmt = $conn->prepare($sql);
-                                            $stmt->execute();
-                                            $op = $stmt->fetch();
-                                            $gender = $op['gender'];
-                                            echo '<option value="'.$gender.'">'.$gender.'</option>';
-                                        ?>
-                                        <option value="Other">Other</option>
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
-                                    </select></td>
-                                </tr>
-                                <tr>
-                                    <td>Sexuality</td>
-                                    <td><select name="sexuality">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <form action="profileinfo.php" method="POST">
+                            <div class="form-group">
+                                <label for="newusername">New Username</label>
+                                <input type="text" class="form-control" name="newusername" id="Email1" aria-describedby="emailHelp" placeholder="Enter email">
+                                <small id="emailHelp" class="form-text text-muted">Plese make it different, dont be trollin kay.</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="Password">Password</label>
+                                <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+                <hr/>
+                <form action="profileinfo.php" method="POST">
+                            <div class="form-group">
+                                <label for="oldpassword">Current Password:</label>
+                                <input type="email" class="form-control" name="oldpassword" id="Email1" aria-describedby="emailHelp" placeholder="Enter email">
+                                <small id="emailHelp" class="form-text text-muted">You need to verify from the new email in order to activate it.</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Password</label>
+                                <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+                <hr/>
+                <form action="profileinfo.php" method="POST">
+                            <div class="form-group">
+                                <label for="oldpassword">Current Password:</label>
+                                <input type="email" class="form-control" name="oldpassword" id="Email1" aria-describedby="emailHelp" placeholder="Enter email">
+                                <small id="emailHelp" class="form-text text-muted">You need to verify from the new email in order to activate it.</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="newPassword">New Password</label>
+                                <input type="password" name="newpassword" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                            </div>
+                            <div class="form-group">
+                                <label for="newPassword">New Password verification</label>
+                                <input type="password" name="newpassword_vr" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+                <hr/>
+                <form action="profileinfo.php" method="POST">
+                            <div class="form-group">
+                                <label for="Email">Email address</label>
+                                <input type="email" class="form-control" name="newemail" id="Email" aria-describedby="emailHelp" placeholder="Enter email">
+                                <small id="emailHelp" class="form-text text-muted">You need to verify from the new email in order to activate it.</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Password</label>
+                                <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+                <hr/>
+                <form action="profileinfo.php" method="POST">
+                            <div class="form-group">
+                                <label for="Email notification">Email notification</label>
+                                <small id="emailHelp" class="form-text text-muted">
                                     <?php
+                                        require_once('../config/setup.php');
                                         $id = $_SESSION['id'];
-                                        $sql = "SELECT sexuality FROM users WHERE id = $id";
-                                        $stmt = $conn->prepare($sql);
+                                        $stmt = $conn->prepare("SELECT * FROM users WHERE id = $id");
                                         $stmt->execute();
-                                        $op = $stmt->fetch();
-                                        $sexuality = $op['sexuality'];
-                                        echo '<option value="'.$sexuality.'">'.$sexuality.'</option>';
+                                        $row = $stmt->fetch();
+                                        $status = $row['comment_notifications'];
+
+                                        echo 'current status: '.$status;
                                     ?>
-                                        <option value="Bisexual">Bisexual</option>
-                                        <option value="Homosexual">Homosexual</option>
-                                        <option value="Hetrosexual">Hetrosexual</option>
-                                    </select></td>
-                                </tr>
-                                <tr>
-                                    <td>Age</td>
-                                    <td><select name="age">
-                                        <?php
-                                            require_once('../config/setup.php');
-                                            $id = $_SESSION['id'];
-                                            $sql = "SELECT age FROM users WHERE id = $id";
-                                            $stmt = $conn->prepare($sql);
-                                            $stmt->execute();
-                                            $op = $stmt->fetch();
-                                            $age = $op['age'];
-                                            echo '<option value="'.$age.'">'.$age.'</option>';
-                                            $age = 18;
-                                            while ($age < 150){
-                                                echo '<option value="'.$age.'">'.$age.'</option>';
-                                                $age++;
-                                            }
-                                            
-                                        ?>
-                                    </select></td>
-                                </tr>
-                                <tr>
-                                    <td>Location</td>
-                                    <td><input type="text" name="location" value='N/A' required></td>
-                                </tr>
-                                <tr>
-                                    <td>Tag matching</td>
-                                    <td>
-                                    <select type="text" name="tagmatching" placeholder="Empty">
-                                        <?php
-                                            $sql = "SELECT tagmatching FROM users WHERE id = $id";
-                                            $stmt = $conn->prepare($sql);
-                                            $stmt->execute();
-                                            $op = $stmt->fetch();
-
-                                            if ($op['tagmatching']){
-                                                echo '<option value=1>YEAH</option>
-                                                <option value=0>NO PLEASE NO</option>';
-                                            } else {
-                                                echo '<option value=0>NO PLEASE NO</option>
-                                                <option value=1>YEAH</option>';
-                                            }
-                                        ?>
-                                    </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><button type="submit" name="submit">SUBMIT</button></td>
-                                </tr>
-                                </form>
-                                <form action="usertags.php?tag" method="POST">
-                                <tr>
-                                    <td>Tag-1</td>
-                                    <td>
-                                    <select type="text" name="tag1" placeholder="Empty">
-                                        <?php
-                                            require_once('../config/setup.php');
-                                            $id = $_SESSION['id'];
-                                            $sql = "SELECT tag1 FROM usertags WHERE userid = $id";
-                                            $stmt = $conn->prepare($sql);
-                                            $stmt->execute();
-                                            $op = $stmt->fetch();
-                                            $tag = $op['tag1'];
-                                            echo '<option value="'.$tag.'">'.$tag.'</option>';
-                                            $sql = "SELECT tag FROM tags";
-                                            $stmt = $conn->prepare($sql);
-                                            $stmt->execute();
-                                            while ($op = $stmt->fetch()){
-                                                $tag = $op['tag'];
-                                                echo '<option value="'.$tag.'">'.$tag.'</option>';
-                                            }
-                                        ?>
-                                    </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Tag-2</td>
-                                    <td>
-                                    <select type="text" name="tag2" placeholder="Empty">
-                                            <?php
-                                                require_once('../config/setup.php');
-                                                $id = $_SESSION['id'];
-                                                $sql = "SELECT tag2 FROM usertags WHERE userid = $id";
-                                                $stmt = $conn->prepare($sql);
-                                                $stmt->execute();
-                                                $op = $stmt->fetch();
-                                                $tag = $op['tag2'];
-                                                echo '<option value="'.$tag.'">'.$tag.'</option>';
-                                                $sql = "SELECT tag FROM tags";
-                                                $stmt = $conn->prepare($sql);
-                                                $stmt->execute();
-                                                while ($op = $stmt->fetch()){
-                                                    $tag = $op['tag'];
-                                                    echo '<option value="'.$tag.'">'.$tag.'</option>';
-                                                }
-                                            ?>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Tag-3</td>
-                                    <td>
-                                    <select type="text" name="tag3" placeholder="Empty">
-                                            <?php
-                                                require_once('../config/setup.php');
-                                                $id = $_SESSION['id'];
-                                                $sql = "SELECT tag3 FROM usertags WHERE userid = $id";
-                                                $stmt = $conn->prepare($sql);
-                                                $stmt->execute();
-                                                $op = $stmt->fetch();
-                                                $tag = $op['tag3'];
-                                                echo '<option value="'.$tag.'">'.$tag.'</option>';
-                                                $sql = "SELECT tag FROM tags";
-                                                $stmt = $conn->prepare($sql);
-                                                $stmt->execute();
-                                                while ($op = $stmt->fetch()){
-                                                    $tag = $op['tag'];
-                                                    echo '<option value="'.$tag.'">'.$tag.'</option>';
-                                                }
-                                            ?>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Tag-4</td>
-                                    <td>
-                                    <select type="text" name="tag4" placeholder="Empty">
-                                            <?php
-                                                $id = $_SESSION['id'];
-                                                $sql = "SELECT tag4 FROM usertags WHERE userid = $id";
-                                                $stmt = $conn->prepare($sql);
-                                                $stmt->execute();
-                                                $op = $stmt->fetch();
-                                                $tag = $op['tag4'];
-                                                echo '<option value="'.$tag.'">'.$tag.'</option>';
-                                                $sql = "SELECT tag FROM tags";
-                                                $stmt = $conn->prepare($sql);
-                                                $stmt->execute();
-                                                while ($op = $stmt->fetch()){
-                                                    $tag = $op['tag'];
-                                                    echo '<option value="'.$tag.'">'.$tag.'</option>';
-                                                }
-                                            ?>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Tag-5</td>
-                                    <td>
-                                    <select type="text" name="tag5" placeholder="Empty">
-                                            <?php
-                                                require_once('../config/setup.php');
-                                                $id = $_SESSION['id'];
-                                                $sql = "SELECT tag5 FROM usertags WHERE userid = $id";
-                                                $stmt = $conn->prepare($sql);
-                                                $stmt->execute();
-                                                $op = $stmt->fetch();
-                                                $tag = $op['tag5'];
-                                                echo '<option value="'.$tag.'">'.$tag.'</option>';
-                                                $sql = "SELECT tag FROM tags";
-                                                $stmt = $conn->prepare($sql);
-                                                $stmt->execute();
-                                                while ($op = $stmt->fetch()){
-                                                    $tag = $op['tag'];
-                                                    echo '<option value="'.$tag.'">'.$tag.'</option>';
-                                                }
-                                            ?>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><button type="submit" name="submit">SUBMIT</button></td>
-                                </tr>
-                            </table>
-                        </form>
-                        </div>
-                        <div class="formflexbox" style="background-color: #FFFFFF">
-                            <a href="post.php">update your proflie pic</a>
-                        </div>
-                        <div class="formflexbox" style="background-color: #FFFFFF">
-                            <form action="personal.info.php?bio" method="POST" id="bioform">
-                            <?php
-                                    require_once('../config/setup.php');
-                                    
-                                    $id = $_SESSION['id'];
-                                    $sql = "SELECT bio FROM users WHERE id = $id";
-                                    $stmt = $conn->prepare($sql);
-                                    $stmt->execute();
-                                    $bio = $stmt->fetch();
-
-                                    echo '
-                                    <div class="commentflexbox">
-                                        <table class=table>
-                                            <tr>
-                                                <td><h3>BIO</h3></td>
-                                                <td><textarea rows="3" cols="50" name="bio" form="bioform" required placeholder="Hey, say something :D (max chars:255)">'.$bio['bio'].'</textarea></td>
-                                            </tr>
-                                            <tr>
-                                               <td><button type="submit" name="submit" required>Update bio</button></td>
-                                            </tr>
-                                        </table>
-                                    </div>';
-                            ?>
-                            </form>
-                        </div>
-                        <div class="formflexbox" style="background-color: #FFFFFF">
-                            <form action="profileinfo.php" method="POST">
-                                <h1>Pasts likes from people</h1>
-                                <?php
-                                    $id = $_SESSION['id'];
-                                    $sql = "SELECT seekerid FROM matches WHERE  matchid = '$id' AND result = '1' ORDER BY id DESC";
-                                    $stmt = $conn->prepare($sql);
-                                    $stmt->execute();
-                                    
-                                    while ($person = $stmt->fetch()){
-                                        $seekerid = $person['seekerid'];
-                                        $sql = "SELECT username FROM users WHERE id = '$seekerid'";
-                                        $stmt2 = $conn->prepare($sql);
-                                        $stmt2->execute();
-
-                                        $seeekerinfo = $stmt2->fetch();
-                                        $seekername = $seeekerinfo['username'];
-
-                                        echo '<div class=usernameflexbox>'.$seekername.'</div>';
-                                    }
-                                ?>
-                            </form>
-                        </div>
-                        <div class="formflexbox" style="background-color: #FFFFFF">
-                            <form action="profileinfo.php" method="POST">
-                                <h1>Pasts views from people</h1>
-                                <?php
-                                    $id = $_SESSION['id'];
-                                    $sql = "SELECT seekerid FROM matches WHERE  matchid = '$id' ORDER BY id DESC";
-                                    $stmt = $conn->prepare($sql);
-                                    $stmt->execute();
-                                    
-                                    while ($person = $stmt->fetch()){
-                                        $seekerid = $person['seekerid'];
-                                        $sql = "SELECT username FROM users WHERE id = '$seekerid'";
-                                        $stmt2 = $conn->prepare($sql);
-                                        $stmt2->execute();
-
-                                        $seeekerinfo = $stmt2->fetch();
-                                        $seekername = $seeekerinfo['username'];
-
-                                        echo '<div class=usernameflexbox>'.$seekername.'</div>';
-                                    }
-                                ?>
-                            </form>
-                        </div>
-                        <div class="formflexbox" style="background-color: #FFFFFF; height: 80px">
-                            <form action="profileinfo.php" method="POST">
-                                <h1>Fame rating: 
-                                <?php 
-                                    $id = $_SESSION['id'];
-                                    $sql = "SELECT Fame FROM users WHERE id = $id";
-                                    $stmt = $conn->prepare($sql);
-                                    $stmt->execute();
-                                    $fame = $stmt->fetch();
-                                    echo $fame['Fame'];
-                                    ?></h1>
-                            </form>
-                        </div>
-                        </div>
+                                </small>
+                                <select name="comment_notifications">
+                                    <option value="ON">ON</option>
+                                    <option value="OFF">OFF</option>
+                                </select>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                </form>
+            </div>
+            <div class="col-sm">
+                <form action="personal.info.php?pref" method="POST">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">gender</label>
+                      </div>
+                      <select class="custom-select" name="gender">
                         <?php
-                            include '../messages/phpboxmessages.php';
+                            $sql = "SELECT gender FROM users WHERE id = $id";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->execute();
+                            $op = $stmt->fetch();
+                            $gender = $op['gender'];
+                            echo '<option value="'.$gender.'">'.$gender.'</option>';
                         ?>
+                        <option value="Other">Other</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                      </select>
                     </div>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Sexuality</label>
+                      </div>
+                      <select class="custom-select" name="gender">
+                        <?php
+                            $id = $_SESSION['id'];
+                            $sql = "SELECT sexuality FROM users WHERE id = $id";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->execute();
+                            $op = $stmt->fetch();
+                            $sexuality = $op['sexuality'];
+                            echo '<option value="'.$sexuality.'">'.$sexuality.'</option>';
+                        ?>
+                        <option value="Bisexual">Bisexual</option>
+                        <option value="Homosexual">Homosexual</option>
+                        <option value="Hetrosexual">Hetrosexual</option>
+                      </select>
+                    </div>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Age</label>
+                      </div>
+                      <select class="custom-select" name="age">
+                        <?php
+                            $id = $_SESSION['id'];
+                            $sql = "SELECT age FROM users WHERE id = $id";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->execute();
+                            $op = $stmt->fetch();
+                            $age = $op['age'];
+                            echo '<option value="'.$age.'">'.$age.'</option>';
+                            $age = 18;
+                            while ($age < 150){
+                                echo '<option value="'.$age.'">'.$age.'</option>';
+                                $age++;
+                            }
+                        ?>
+                      </select>
+                    </div>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Tag Matching</label>
+                      </div>
+                      <select class="custom-select" name="tagmatching">
+                        <?php
+                            $sql = "SELECT tagmatching FROM users WHERE id = $id";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->execute();
+                            $op = $stmt->fetch();
+                            if ($op['tagmatching']){
+                                echo '<option value=1>YEAH</option>
+                                <option value=0>NO PLEASE NO</option>';
+                            } else {
+                                echo '<option value=0>NO PLEASE NO</option>
+                                <option value=1>YEAH</option>';
+                            }
+                        ?>
+                      </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <hr/>
+                </form>
+                <div class="formflexbox" style="background-color: #FFFFFF">
+                        <a href="post.php">update your proflie pic</a>
                 </div>
-            </div>   
+                <hr/>
+                <div class="formflexbox" style="background-color: #FFFFFF">
+                    <form action="personal.info.php?bio" method="POST" id="bioform">
+                    <?php
+                            require_once('../config/setup.php');                                    
+                            $id = $_SESSION['id'];
+                            $sql = "SELECT bio FROM users WHERE id = $id";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->execute();
+                            $bio = $stmt->fetch();
+
+                            echo'
+                            <div class="form-group">
+                              <label for="exampleFormControlTextarea1">Bio</label>
+                              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3">'.$bio['bio'].'</textarea>
+                            </div>
+                            ';
+                    ?>
+                    </form>
+                </div>
+                <hr/>
+                <form action="usertags.php?tag" method="POST">
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Tag#1</label>
+                      </div>
+                      <select class="custom-select" name="gender">
+                        <?php
+                            $id = $_SESSION['id'];
+                            $sql = "SELECT tag1 FROM usertags WHERE userid = $id";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->execute();
+                            $op = $stmt->fetch();
+                            $tag = $op['tag1'];
+                            echo '<option value="'.$tag.'">'.$tag.'</option>';
+                            $sql = "SELECT tag FROM tags";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->execute();
+                            while ($op = $stmt->fetch()){
+                                $tag = $op['tag'];
+                                echo '<option value="'.$tag.'">'.$tag.'</option>';
+                            }
+                        ?>
+                      </select>
+                    </div>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Tag#2</label>
+                      </div>
+                      <select class="custom-select" name="gender">
+                        <?php
+                            $sql = "SELECT tag2 FROM usertags WHERE userid = $id";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->execute();
+                            $op = $stmt->fetch();
+                            $tag = $op['tag2'];
+                            echo '<option value="'.$tag.'">'.$tag.'</option>';
+                            $sql = "SELECT tag FROM tags";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->execute();
+                            while ($op = $stmt->fetch()){
+                                $tag = $op['tag'];
+                                echo '<option value="'.$tag.'">'.$tag.'</option>';
+                            }
+                        ?>
+                      </select>
+                    </div>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Tag#3</label>
+                      </div>
+                      <select class="custom-select" name="gender">
+                        <?php
+                            $sql = "SELECT tag3 FROM usertags WHERE userid = $id";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->execute();
+                            $op = $stmt->fetch();
+                            $tag = $op['tag3'];
+                            echo '<option value="'.$tag.'">'.$tag.'</option>';
+                            $sql = "SELECT tag FROM tags";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->execute();
+                            while ($op = $stmt->fetch()){
+                                $tag = $op['tag'];
+                                echo '<option value="'.$tag.'">'.$tag.'</option>';
+                            }
+                        ?>
+                      </select>
+                    </div>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Tag#4</label>
+                      </div>
+                      <select class="custom-select" name="gender">
+                        <?php
+                            $sql = "SELECT tag4 FROM usertags WHERE userid = $id";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->execute();
+                            $op = $stmt->fetch();
+                            $tag = $op['tag4'];
+                            echo '<option value="'.$tag.'">'.$tag.'</option>';
+                            $sql = "SELECT tag FROM tags";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->execute();
+                            while ($op = $stmt->fetch()){
+                                $tag = $op['tag'];
+                                echo '<option value="'.$tag.'">'.$tag.'</option>';
+                            }
+                        ?>
+                      </select>
+                    </div>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Tag#5</label>
+                      </div>
+                      <select class="custom-select" name="gender">
+                        <?php
+                            $sql = "SELECT tag5 FROM usertags WHERE userid = $id";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->execute();
+                            $op = $stmt->fetch();
+                            $tag = $op['tag5'];
+                            echo '<option value="'.$tag.'">'.$tag.'</option>';
+                            $sql = "SELECT tag FROM tags";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->execute();
+                            while ($op = $stmt->fetch()){
+                                $tag = $op['tag'];
+                                echo '<option value="'.$tag.'">'.$tag.'</option>';
+                            }
+                        ?>
+                      </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+            <?php
+                include '../messages/phpboxmessages.php';
+            ?>
+            </div>
         </div>
-    </body>
+    </div>
+</body>
 </html>

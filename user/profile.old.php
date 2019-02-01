@@ -7,125 +7,125 @@ if (!isset($_SESSION['username'])) {
 }
 
 ?>
-
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-</head>
-<body bgcolor="red">
-
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">Matcher</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-          
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                  <a class="nav-link" href="profile.php">User <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="chat.html">Chat</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="matchme.info.php">Match-Me-Now</a>
-                </li>
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Xtra-stuff
-                  </a>
-                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Profile impressions</a>
-                    <a class="dropdown-item" href="#">Profile likers</a>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </nav>
-        <div class="container">
+    <head>
+        <title>Trender-Profile</title>
+        <link rel="stylesheet" href="../css/mystyles.css">      
+    </head>
+    <body bgcolor=red>
+        <nv>
+            <nvli style="float: left;"><a href="../index.php">Home</a></nvli>
+            <?php
+            if (!isset($_SESSION['id']))
+            {
+                echo '
+                    <nvli><a href="../signup/signup.php">Sign up</a></nvli>
+                    <nvli><a href="../login/login.php">Login</a></nvli>';
+            }
+            else
+            {
+                echo '
+                <nvli><a href="../login/logout.php">Logout</a></nvli>
+                <nvli><a href="socialtab.php">SOCIAL</a></nvli>
+                <nvli><a href="matchme.info.php">MATCH ME</a></nvli>
+                <nvli><a class=active href="profile.php">' . $_SESSION['username'] . '</a></nvli>';
+            }
+            ?>
+        </nv>
+        <div class="mainbox">
+            <div class="subbox">
+                    <div class="formflexbox" style="height:600px; background-color: #FFFFFF">
                     <form action="profileinfo.php" method="POST">
-                            <div class="form-group">
-                                <label for="newusername">New Username</label>
-                                <input type="text" class="form-control" name="newusername" id="Email1" aria-describedby="emailHelp" placeholder="Enter email">
-                                <small id="emailHelp" class="form-text text-muted">Plese make it different, dont be trollin kay.</small>
-                            </div>
-                            <div class="form-group">
-                                <label for="Password">Password</label>
-                                <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                            </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <table class=table>
+                                <tr>
+                                    <td>new username:</td>
+                                    <td><input type="text" name="newusername" required></td>
+                                </tr>
+                                <tr>
+                                    <td>password:</td>
+                                    <td><input type="password" name="password" required></td>
+                                </tr>
+                                <tr>
+                                    <td><button type="submit" name="submit">SUBMIT</button></td>
+                                </tr>
+                            </table>
                         </form>
-                        <hr/>
-                        <form action="profileinfo.php" method="POST">
-                            <div class="form-group">
-                                <label for="oldpassword">Current Password:</label>
-                                <input type="email" class="form-control" name="oldpassword" id="Email1" aria-describedby="emailHelp" placeholder="Enter email">
-                                <small id="emailHelp" class="form-text text-muted">You need to verify from the new email in order to activate it.</small>
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">Password</label>
-                                <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                            </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
-                        <hr/>
-                        <form action="profileinfo.php" method="POST">
-                            <div class="form-group">
-                                <label for="oldpassword">Current Password:</label>
-                                <input type="email" class="form-control" name="oldpassword" id="Email1" aria-describedby="emailHelp" placeholder="Enter email">
-                                <small id="emailHelp" class="form-text text-muted">You need to verify from the new email in order to activate it.</small>
-                            </div>
-                            <div class="form-group">
-                                <label for="newPassword">New Password</label>
-                                <input type="password" name="newpassword" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                            </div>
-                            <div class="form-group">
-                                <label for="newPassword">New Password verification</label>
-                                <input type="password" name="newpassword_vr" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                            </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
-                        <hr/>
-                        <form action="profileinfo.php" method="POST">
-                            <div class="form-group">
-                                <label for="Email">Email address</label>
-                                <input type="email" class="form-control" name="newemail" id="Email" aria-describedby="emailHelp" placeholder="Enter email">
-                                <small id="emailHelp" class="form-text text-muted">You need to verify from the new email in order to activate it.</small>
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">Password</label>
-                                <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                            </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
-                        <hr/>
                         <form action="profileinfo.php" method="POST">
                             <hr/>
-                            <div class="form-group">
-                                <label for="Email notification">Email notification</label>
-                                <small id="emailHelp" class="form-text text-muted">
-                                <?php
-                                /*$username = $_SESSION['username'];
-                                $stmt = $conn->prepare("SELECT * FROM users WHERE username ='$username'");
-                                $stmt->execute();
-                                $row = $stmt->fetch();
-*/
-                                echo 'current status: ';//. $row['comment_notifications'];
-                                ?>
-                                </small>
-                                <select name="comment_notifications">
-                                    <option value="ON">ON</option>
-                                    <option value="OFF">OFF</option>
-                                </select>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <table class=table>
+                                <tr>
+                                    <td>old password:</td>
+                                    <td><input type="password" name="oldpassword" required></td>
+                                </tr>
+                                <tr>
+                                    <td>new password:</td>
+                                    <td><input type="password" name="newpassword" required></td>
+                                </tr>
+                                <tr>
+                                    <td>new password verification:</td>
+                                    <td><input type="password" name="newpassword_vr" required></td>
+                                </tr>
+                                <tr>
+                                    <td><button type="submit" name="submit">SUBMIT</button></td>
+                                </tr>
+                            </table>
                         </form>
+                        <form action="profileinfo.php" method="POST">
+                            <hr/>
+                            <table class=table>
+                                <tr>
+                                    <td>new email:</td>
+                                    <td><input type="text" name="newemail" required></td>
+                                </tr>
+                                <tr>
+                                    <td>password:</td>
+                                    <td><input type="password" name="password" required></td>
+                                </tr>
+                                <tr>
+                                    <td><button type="submit" name="submit">SUBMIT</button></td>
+                                </tr>
+                            </table>
+                        </form>
+                        <form action="profileinfo.php" method="POST">
+                            <hr/>
+                            <table class=table>
+                                <tr>
+                                    <td>email comment notification:</td>
+                                    <td>
+                                        <?php
+                                            require_once("../config/setup.php");
+                                            $username = $_SESSION['username'];
+                                            $stmt = $conn->prepare("SELECT * FROM users WHERE username ='$username'");
+                                            $stmt->execute();
+                                            $row = $stmt->fetch();
+
+                                            echo 'current status: '. $row['comment_notifications'];
+
+                                            if ($row['comment_notifications'] != 'OFF') {
+                                                echo '
+                                                    <select name="comment_notifications">
+                                                        <option value="ON">ON</option>
+                                                        <option value="OFF">OFF</option>
+                                                    </select>';
+                                            } else {
+                                                echo '
+                                                    <select name="comment_notifications">
+                                                        <option value="OFF">OFF</option>
+                                                        <option value="ON">ON</option>
+                                                    </select>';
+                                            }
+                                            
+                                        ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><button type="submit" name="submit">SUBMIT</button></td>
+                                </tr>
+                            </table>
+                        </form>
+                        </div>
+                        <div class="formflexbox" style="height:290px; background-color: #FFFFFF">
                         <form action="personal.info.php?pref" method="POST">
                             <table class=table>
                                 </tr>
@@ -337,6 +337,7 @@ if (!isset($_SESSION['username'])) {
                                 </tr>
                             </table>
                         </form>
+                        </div>
                         <div class="formflexbox" style="background-color: #FFFFFF">
                             <a href="post.php">update your proflie pic</a>
                         </div>
@@ -366,12 +367,72 @@ if (!isset($_SESSION['username'])) {
                             ?>
                             </form>
                         </div>
-             
+                        <div class="formflexbox" style="background-color: #FFFFFF">
+                            <form action="profileinfo.php" method="POST">
+                                <h1>Pasts likes from people</h1>
+                                <?php
+                                    $id = $_SESSION['id'];
+                                    $sql = "SELECT seekerid FROM matches WHERE  matchid = '$id' AND result = '1' ORDER BY id DESC";
+                                    $stmt = $conn->prepare($sql);
+                                    $stmt->execute();
+                                    
+                                    while ($person = $stmt->fetch()){
+                                        $seekerid = $person['seekerid'];
+                                        $sql = "SELECT username FROM users WHERE id = '$seekerid'";
+                                        $stmt2 = $conn->prepare($sql);
+                                        $stmt2->execute();
+
+                                        $seeekerinfo = $stmt2->fetch();
+                                        $seekername = $seeekerinfo['username'];
+
+                                        echo '<div class=usernameflexbox>'.$seekername.'</div>';
+                                    }
+                                ?>
+                            </form>
+                        </div>
+                        <div class="formflexbox" style="background-color: #FFFFFF">
+                            <form action="profileinfo.php" method="POST">
+                                <h1>Pasts views from people</h1>
+                                <?php
+                                    $id = $_SESSION['id'];
+                                    $sql = "SELECT seekerid FROM matches WHERE  matchid = '$id' ORDER BY id DESC";
+                                    $stmt = $conn->prepare($sql);
+                                    $stmt->execute();
+                                    
+                                    while ($person = $stmt->fetch()){
+                                        $seekerid = $person['seekerid'];
+                                        $sql = "SELECT username FROM users WHERE id = '$seekerid'";
+                                        $stmt2 = $conn->prepare($sql);
+                                        $stmt2->execute();
+
+                                        $seeekerinfo = $stmt2->fetch();
+                                        $seekername = $seeekerinfo['username'];
+
+                                        echo '<div class=usernameflexbox>'.$seekername.'</div>';
+                                    }
+                                ?>
+                            </form>
+                        </div>
+                        <div class="formflexbox" style="background-color: #FFFFFF; height: 80px">
+                            <form action="profileinfo.php" method="POST">
+                                <h1>Fame rating: 
+                                <?php 
+                                    $id = $_SESSION['id'];
+                                    $sql = "SELECT Fame FROM users WHERE id = $id";
+                                    $stmt = $conn->prepare($sql);
+                                    $stmt->execute();
+                                    $fame = $stmt->fetch();
+                                    echo $fame['Fame'];
+                                    ?></h1>
+                            </form>
+                        </div>
+                        </div>
                         <?php
                             include '../messages/phpboxmessages.php';
                         ?>
                     </div>
-            </div>
+                </div>
+            </div>   
         </div>
     </body>
 </html>
