@@ -53,36 +53,53 @@ include_once('../functions/sanitize.php');
           <div class="container">
             <div class="row">
               <?php
-
+              try{
                 $userid = $_SESSION['id'];
+
                 $sql = "SELECT * FROM chats WHERE id1 = $userid OR id2 = $userid";
                 $stmt = $conn->prepare($sql);
                 $stmt->execute();
                 
                 while ($row = $stmt->fetch()){
 
-                  $chatid = $row['id'];
+                  if ($userid == $row['id1'])
+                    $chatid = $row['id2'];
+                  else 
+                    $chatid = $row['id1'];
+                    
 
-                  $sql = "SELECT picture FROM pics WHERE userid = $chatid AND picrole ='profile'";
+                  $sql = "SELECT picture FROM pics WHERE userid = '$chatid' AND picrole ='profile'";
                   $stmt2 = $conn->prepare($sql);
                   $stmt2->execute();
 
                   $chatimage = $stmt2->fetch();
                   $image = $chatimage['picture'];
-                  $name = $row['username'];
-                  $bio = $row['bio'];
 
-                  echo '<div class="card" style="width: 18rem;">
-                    <img src="'.$image.'" class="card-img-top" alt="'.$name.'">
-                    <div class="card-body">
-                      <h5 class="card-title">'.$name.'</h5>
-                      <p class="card-text">'.$bio.'</p>
-                      <a href="chat.php?id='.$chatid.'" class="btn btn-info">CHAT!!!</a>
-                    </div>
-                  </div>';
+                  $sql = "SELECT * FROM users WHERE id = '$chatid'";
+                  $stmt3 = $conn->prepare($sql);
+                  $stmt3->execute();
+                  $row1 = $stmt3->fetch();
+
+                  $name = $row1['username'];
+                  $bio = $row1['bio'];
+
+                  if (isset($bio)) {
+                    echo '<div class="card" style="width: 18rem;">
+                      <img src="'.$image.'" class="card-img-top" alt="'.$name.'">
+                      <div class="card-body">
+                        <h5 class="card-title">'.$name.'</h5>
+                        <p class="card-text">'.$bio.'</p>
+                        <a href="chat.php?id='.$chatid.'" class="btn btn-info">CHAT!!!</a>
+                      </div>
+                    </div>';
+                  }
+                }
+                } catch (PDOException $e){
+                  echo $e->getmessage();
                 }
               ?>
             </div>
+            <h3>NO MORE RESULTS BRUH</h3>
           </div>
     <!--js for bootstrap-->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

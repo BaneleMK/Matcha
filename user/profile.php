@@ -31,7 +31,7 @@ if (!isset($_SESSION['username'])) {
                   <a class="nav-link" href="profile.php">User <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="chat.php">Chat</a>
+                  <a class="nav-link" href="chatselect.php">Chat</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="matchme.info.php">Match-Me-Now</a>

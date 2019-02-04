@@ -62,6 +62,7 @@
         $sql = "CREATE TABLE IF NOT EXISTS messages (
             messageid INT(7) UNSIGNED NOT NULL,
             receiverid INT(7) UNSIGNED NOT NULL,
+            senderid INT(7) UNSIGNED NOT NULL,
             textmessage VARCHAR(255) NOT NULL 
         ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin";
     

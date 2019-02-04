@@ -53,7 +53,7 @@ include_once('../functions/sanitize.php');
         <div class="container">
             <h1>Chat W/<?php
 
-            $id = $_GET['receiverid'];
+            $id = $_GET['id'];
 
             $sql = "SELECT * FROM users WHERE id = $id";
             $stmt = $conn->prepare($sql);
