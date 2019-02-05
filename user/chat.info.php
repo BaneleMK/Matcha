@@ -9,32 +9,33 @@ if (isset($_SESSION['id'])) {
     try {
         $id1 = $_SESSION['id'];
         $id2 = $_POST['receiver'];
-        $textmessage = $_POST['textmessage'];
+        $textmessage = sanitize($_POST['textmessage']);
 
-        $sql = "SELECT * FROM chats WHERE id1 = $id1 AND id2 = $id2";
+        $sql = "SELECT COUNT(*) FROM chats WHERE id1 = '$id1' AND id2 = '$id2'";
         $res1 = $conn->query($sql);
 
-        $sql = "SELECT * FROM chats WHERE id1 = $id2 AND id2 = $id1";
+        $sql = "SELECT COUNT(*) FROM chats WHERE id1 = '$id2' AND id2 = '$id1'";
         $res2 = $conn->query($sql);
 
         if (($res1->fetchColumn() > 0) || ($res2->fetchColumn() > 0)) {
             $receiverid = $id2;
+            echo 'im here now. the message will be sent';
 
-            // if passes do this
             $sql = "INSERT INTO messages (textmessage, receiverid, senderid) VALUES(:textmessage, :receiverid, :senderid)";
+            $stmt = $conn->prepare($sql);
             $stmt->bindParam(':textmessage', $textmessage);
             $stmt->bindParam(':receiverid', $receiverid);
             $stmt->bindParam(':senderid', $id1);
             $stmt->execute();
 
-            echo 'pass for '.$id1.' and '.$id2;
+            header("Location: chat.php?id=$id2");
             exit();
         } else {
-            echo 'fail for '.$id1.' and '.$id2;
+            header("Location: chatselect.php?");
             exit();
         }
     } catch (PDOException $e) {
-        //echo "failed: " . $e->getMessage() . "<br>";
+        echo "failed: " . $e->getMessage() . "<br>";
         header("Location: chat.php?id=$id2");
         exit();
     }

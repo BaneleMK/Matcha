@@ -423,7 +423,8 @@ if (!isset($_SESSION['username'])) {
                                     $stmt->execute();
                                     $fame = $stmt->fetch();
                                     echo $fame['Fame'];
-                                    ?></h1>
+                                ?>
+                                </h1>
                             </form>
                         </div>
                         </div>

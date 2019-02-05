@@ -2,115 +2,106 @@
 
 session_start();
 
-if (!isset($_SESSION['username'])) {
+if (!isset($_SESSION['id'])) {
     header("Location: ../index.php");
 }
-
+require_once('../config/setup.php');
+include_once('../functions/sanitize.php');
 ?>
+
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Trender-Profile</title>
-        <link rel="stylesheet" href="../css/mystyles.css">      
-    </head>
-    <body bgcolor=red>
-        <nv>
-            <nvli style="float: left;"><a href="../index.php">Home</a></nvli>
-            <?php
-            if (!isset($_SESSION['id']))
-            {
-                echo '
-                    <nvli><a href="../signup/signup.php">Sign up</a></nvli>
-                    <nvli><a href="../login/login.php">Login</a></nvli>';
-            }
-            else
-            {
-                echo '
-                <nvli><a href="../login/logout.php">Logout</a></nvli>
-                <nvli><a class=active href="socialtab.php">SOCIAL</a></nvli>
-                <nvli><a href="matchme.php">MATCH ME</a></nvli>
-                <nvli><a href="profile.php">' . $_SESSION['username'] . '</a></nvli>';
-            }
-            ?>
-        </nv>
-        <div class="mainbox">
-            <div class="subbox">
-                        
-                        </div>
-                        <div class="formflexbox" style="background-color: #FFFFFF">
-                            <form action="profileinfo.php" method="POST">
-                                <table>
-                                    <tr>
-                                        <td>Profile Picture</td>
-                                        <td><input type="file" name="profilepic" required></td>
-                                    </tr>
-                                    <tr>
-                                        <td><button type="submit" name="submit">SUBMIT</button></td>
-                                    </tr>
-                                </table>
-                            </form>
-                        </div>
-                        <div class="formflexbox" style="background-color: #FFFFFF">
-                            <form action="personal.info.php?bio" method="POST" id="bioform">
-                            <?php
-                                    require_once('../config/setup.php');
-                                    
-                                    $id = $_SESSION['id'];
-                                    $sql = "SELECT bio FROM users WHERE id = $id";
-                                    $stmt = $conn->prepare($sql);
-                                    $stmt->execute();
-                                    $bio = $stmt->fetch();
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+</head>
+<body bgcolor="red">
 
-                                    echo '
-                                    <div class="commentflexbox">
-                                        <table class=table>
-                                            <tr>
-                                                <td><h3>BIO</h3></td>
-                                                <td><textarea rows="3" cols="50" name="bio" form="bioform" required placeholder="Hey, say something :D (max chars:255)">'.$bio['bio'].'</textarea></td>
-                                            </tr>
-                                            <tr>
-                                               <td><button type="submit" name="submit" required>Update bio</button></td>
-                                            </tr>
-                                        </table>
-                                    </div>';
+        <?php include('../includes/navbar.php');?>
+          
+        <div class="container">
+        
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item active" aria-current="page">SOCIAL <TABle></TABle></li>
+              </ol>
+            </nav>
+
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-success">
+                <h3>Fame rating: 
+                            <?php 
+                                $id = $_SESSION['id'];
+                                $sql = "SELECT Fame FROM users WHERE id = $id";
+                                $stmt = $conn->prepare($sql);
+                                $stmt->execute();
+                                $fame = $stmt->fetch();
+                                echo $fame['Fame'];
+                            ?></h3></li>
+            </ul>
+            <br/>
+        </div>
+                
+        <div class="container">
+
+            <div class="row">
+                <div class="col-sm">
+                    <ul class="list-group">
+                        <li class="list-group-item active">People who like you</li>
+                            <?php
+                                $id = $_SESSION['id'];
+                                $sql = "SELECT seekerid FROM matches WHERE  matchid = '$id' AND result = '1' ORDER BY id DESC";
+                                $stmt = $conn->prepare($sql);
+                                $stmt->execute();
+                                
+                                while ($person = $stmt->fetch()){
+                                    $seekerid = $person['seekerid'];
+                                    $sql = "SELECT username FROM users WHERE id = '$seekerid'";
+                                    $stmt2 = $conn->prepare($sql);
+                                    $stmt2->execute();
+                                
+                                    $seeekerinfo = $stmt2->fetch();
+                                    $seekername = $seeekerinfo['username'];
+                                
+                                    echo '<li class="list-group-item">'.$seekername.'</li>';
+                                }
                             ?>
-                            </form>
-                        </div>
-                        <div class="formflexbox" style="background-color: #FFFFFF">
-                            <form action="profileinfo.php" method="POST">
-                                <h1>Pasts likes from people</h1>
-                            </form>
-                        </div>
-                        <div class="formflexbox" style="background-color: #FFFFFF">
-                            <form action="profileinfo.php" method="POST">
-                                <h1>Pasts views from people</h1>
-                            </form>
-                        </div>
-                        <div class="formflexbox" style="background-color: #FFFFFF; height: 80px">
-                            <form action="profileinfo.php" method="POST">
-                                <h1>Fame rating: 
-                                <?php 
+                    </ul>
+                </div>
+                <div class="col-sm">
+                    <ul class="list-group">
+                        <li class="list-group-item active">People who viewed you</li>
+                                <?php
                                     $id = $_SESSION['id'];
-                                    $sql = "SELECT Fame FROM users WHERE id = $id";
+                                    $sql = "SELECT seekerid FROM matches WHERE  matchid = '$id' ORDER BY id DESC";
                                     $stmt = $conn->prepare($sql);
                                     $stmt->execute();
-                                    $fame = $stmt->fetch();
-                                    echo $fame['Fame'];
-                                    ?></h1>
-                            </form>
-                        </div>
-                        <div class="formflexbox" style="background-color: #FFFFFF">
-                            <form action="profileinfo.php" method="POST">
-                                <h1>Pasts views from people</h1>
-                            </form>
-                        </div>
-                        </div>
-                        <?php
-                            include '../messages/phpboxmessages.php';
-                        ?>
-                    </div>
+                                    
+                                    while ($person = $stmt->fetch()){
+                                        $seekerid = $person['seekerid'];
+                                        $sql = "SELECT username FROM users WHERE id = '$seekerid'";
+                                        $stmt2 = $conn->prepare($sql);
+                                        $stmt2->execute();
+
+                                        $seeekerinfo = $stmt2->fetch();
+                                        $seekername = $seeekerinfo['username'];
+
+                                        echo '<li class="list-group-item">'.$seekername.'</li>';
+                                    }
+                                ?>
                 </div>
-            </div>   
+            </div>
         </div>
-    </body>
+
+        <div class="container">
+            <h1>something</h1>
+        </div>
+    <!--js for bootstrap-->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+</body>
 </html>

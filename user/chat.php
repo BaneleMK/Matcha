@@ -20,35 +20,7 @@ include_once('../functions/sanitize.php');
 </head>
 <body bgcolor="red">
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">Matcher</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-          
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                  <a class="nav-link" href="profile.php">User <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="chat.php">Chat</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="matchme.info.php">Match-Me-Now</a>
-                </li>
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Xtra-stuff
-                  </a>
-                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Profile impressions</a>
-                    <a class="dropdown-item" href="#">Profile likers</a>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </nav>
+        <?php include('../includes/navbar.php');?>
           
         <div class="container">
             <h1>Chat W/<?php
@@ -67,17 +39,29 @@ include_once('../functions/sanitize.php');
 
         <div class="container">
             <div class="d-flex flex-column bd-highlight mb-3">
-                <div class="align-self-start"">yo dude</div>
-                <div class="align-self-end"">ey dude</br> yep</div>
-                <div class="align-self-start">okay dude</div>
+                <?php
+                  $userid = $_SESSION['id'];
+                  $sql = "SELECT * FROM messages WHERE (receiverid = '$id' AND senderid= '$userid') OR senderid= '$id' AND receiverid = '$userid'";
+                  $stmt = $conn->prepare($sql);
+                  $stmt->execute();
+
+                  while ($res = $stmt->fetch()){
+                    $textmes = $res['textmessage'];
+                    if ($res['receiverid'] == $id){
+                      echo "<div class=\"align-self-end\">$textmes</div>";
+                    } else {
+                      echo "<div class=\"align-self-start\">$textmes</div>";
+                    }
+                  }
+                ?>
             </div>
-            <form action="chat.info.php?">
+            <form action="chat.info.php?" method=POST>
             <div class="input-group mb-3">
-                <input hidden value="<?php echo $id?>">
-                <input type="text" name="textmessage" class="form-control" placeholder="feel free to type here" aria-label="Recipient's username" aria-describedby="button-addon2">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Send it</button>
-                </div>
+              <input value="<?php echo $id;?>" name="receiver" hidden>
+              <input type="text" name="textmessage" class="form-control" placeholder="feel free to type here" aria-label="Recipient's username" aria-describedby="button-addon2">
+              <div class="input-group-append">
+                  <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Send it</button>
+              </div>
             </div>
             </form>
         </div>

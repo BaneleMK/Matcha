@@ -60,7 +60,7 @@
         //echo "tag table created successfully<br>";
 
         $sql = "CREATE TABLE IF NOT EXISTS messages (
-            messageid INT(7) UNSIGNED NOT NULL,
+            messageid INT(7) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
             receiverid INT(7) UNSIGNED NOT NULL,
             senderid INT(7) UNSIGNED NOT NULL,
             textmessage VARCHAR(255) NOT NULL 
