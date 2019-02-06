@@ -49,11 +49,11 @@
             <td>lastname:</td>
             <td><input type="text" name="lastname" required></td>
         </tr>
-        <tr>
-            <td><button type="submit" name="submit">Sign up</button></td>
-        </tr>
     </table>
     </form>
+
+
+
     </div>
         <?php
             include '../messages/phpboxmessages.php';
