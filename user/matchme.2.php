@@ -94,10 +94,8 @@ session_start();
                         <tr>
                             <?php
                                 $id = $_GET['id'];
-                                echo '
-                                <td><a href="matchmeresults.info.php?result=yes&id='.$id.'"> Like </a></td>
-                                <td><a href="matchmeresults.info.php?result=no&id='.$id.'"> Pass </a></td>
-                                ';
+                                echo '<td><a href="matchmeresults.info.php?result=yes&id='.$id.'"> Like </a></td>
+                                <td><a href="matchmeresults.info.php?result=no&id='.$id.'"> Pass </a></td>';
                             ?>
                         </tr>
                     </table>
