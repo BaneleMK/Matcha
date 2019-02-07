@@ -21,6 +21,24 @@
         }
     }
 
+    function sexuality ($seekerid, $conn) {
+        
+        if ($seeker['sexuality'] == 'Homosexual') {
+            $sql = "SELECT id FROM users WHERE id != '$seekerid' AND gender = '$seekergen'";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+        } else if ($seeker['sexuality'] == 'Hetrosexual') {
+            $sql = "SELECT id FROM users WHERE id != '$seekerid' AND gender != '$seekergen'";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+        } else {
+            $sql = "SELECT id FROM users WHERE id != '$seekerid'";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+        }
+        return ($stmt->fetch());
+    }
+
     require_once("../config/setup.php");
     include("../functions/sanitize.php");
     try {
@@ -35,25 +53,11 @@
             $seekergen = $seeker['gender'];
             $seekertag = $seeker['tagmatching'];
 
-            if ($seeker['sexuality'] == 'Homosexual') {
-                $sql = "SELECT id FROM users WHERE id != '$seekerid' AND gender = '$seekergen'";
-                $stmt = $conn->prepare($sql);
-                $stmt->execute();
-                $match = $stmt->fetch();
-            } else if ($seeker['sexuality'] == 'Hetrosexual') {
-                $sql = "SELECT id FROM users WHERE id != '$seekerid' AND gender != '$seekergen'";
-                $stmt = $conn->prepare($sql);
-                $stmt->execute();
-                $match = $stmt->fetch();
-            } else {
-                $sql = "SELECT id FROM users WHERE id != '$seekerid'";
-                $stmt = $conn->prepare($sql);
-                $stmt->execute();
-                $match = $stmt->fetch();
-            }
+            $match = sexuality($seekerid, $conn);
 
             $matchid = $match['id'];
             while ($match['id']) {
+                //okay boss lets check if these people have been matched before
                 $sql = "SELECT id FROM matches WHERE seekerid = '$seekerid' AND matchid = '$matchid'";
                 $stmt1 = $conn->prepare($sql);
                 $stmt1->execute();

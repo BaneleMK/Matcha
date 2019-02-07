@@ -28,7 +28,7 @@
                     <label for="newusername">Password</label>
                     <input type="password" class="form-control" name="password" aria-describedby="emailHelp" placeholder="Password" require>
                 </div>
-                <button type="submit" class="btn btn-primary">Log in</button>
+                <button type="submit" name="submit" class="btn btn-primary">Log in</button>
             </form>
             <a href="../signup/forgotpassword.php" name="passord_reset">Forgot password?</a>
         <br/>

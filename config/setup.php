@@ -34,7 +34,8 @@
                 user_state VARCHAR(30) NOT NULL DEFAULT 'unregistered',
                 comment_notifications VARCHAR(4) NOT NULL DEFAULT 'ON',
                 verificationcode INT(7) UNSIGNED NOT NULL,
-                bio VARCHAR(500) NOT NULL DEFAULT 'Yo, this is my empty bio yey'
+                bio VARCHAR(500) NOT NULL DEFAULT 'Yo, this is my empty bio yey',
+                tagmatching VARCHAR(20) NOT NULL DEFAULT 'YEAH'
             ) ENGINE=InnoDB DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin";
         
         $conn->exec($sql);

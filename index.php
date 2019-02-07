@@ -18,7 +18,7 @@ include_once('functions/sanitize.php');
 </head>
 <body bgcolor="red">
 
-    <?php include('includes/navbar.php?');?>
+    <?php include('includes/navbar.php');?>
 
     <br/>
     <br/>

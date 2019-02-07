@@ -51,7 +51,7 @@
                     <label for="last name">last name</label>
                     <input type="text" class="form-control" name="lastname" aria-describedby="form-element" placeholder="lastname" required>
                 </div>
-                <button type="submit" class="btn btn-primary">Sign up</button>
+                <button type="submit" name="submit" class="btn btn-primary">Sign up</button>
             </form>
             <a href="../signup/forgotpassword.php" name="passord_reset">Forgot password?</a>
             <br/>
