@@ -66,7 +66,7 @@
                 }
             }
         }
-        header("Location: matchme.info.php");
+        header("Location: match-me-settings.php");
         exit();
     } else {
         header("Location: ../login/login.php");

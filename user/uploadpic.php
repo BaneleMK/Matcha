@@ -103,7 +103,13 @@
                     // add to database the user and their image file
                     
                     $userid = $_SESSION['id'];
-                    $sql = "INSERT INTO pics (userid, picture, picrole) VALUES ('$userid', '$image_storage_name', '$picrole')";
+                    if ($picrole == "profile") {
+                        $sql = "INSERT INTO pics (userid, picture, picrole) VALUES ('$userid', '$image_storage_name', '$picrole')";
+                    } else {
+                        // would be cool or efficient to add a query that deletes the old image from the server for space's sake
+
+                        $sql = "UPDATE users (profilepic) VALUES ('$image_storage_name') WHERE id = $userid";
+                    }
                     $stmt = $conn->prepare($sql);
                     $stmt->execute();
                     

@@ -25,7 +25,7 @@ require_once('../config/setup.php');
                   <div class="input-group-prepend">
                     <label class="input-group-text" for="inputGroupSelect01">Age range</label>
                   </div>
-                  <select class="custom-select" name="age 2">
+                  <select class="custom-select" name="age1">
                     <?php
                         $age = 18;
                         while ($age < 150){
@@ -34,24 +34,57 @@ require_once('../config/setup.php');
                         }
                     ?>
                   </select>
-                  <select class="custom-select" name="age 1">
+                  <select class="custom-select" name="age2">
                     <?php
                         $age = 18;
+                        echo '<option value="150">150</option>';
                         while ($age < 150){
                             echo '<option value="'.$age.'">'.$age.'</option>';
                             $age++;
                         }
                     ?>
                   </select>
-                </div>
-                <div class="input-group mb-3">
+            </div>
+            <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect01">Fame rating</label>
+                  </div>
+                  <select class="custom-select" name="fame1">
+                    <?php
+                        $fame = 0;
+                        while ($fame < 900){
+                            echo '<option value="'.$fame.'">'.$fame.'</option>';
+                            $fame += 50;
+                        }
+                        echo '<option value="9000">9000+</option>';
+                    ?>
+                  </select>
+                  <select class="custom-select" name="fame2">
+                    <?php
+                        $fame = 0;
+                        echo '<option value="9000">9000+</option>';
+                        while ($fame < 900){
+                            echo '<option value="'.$fame.'">'.$fame.'</option>';
+                            $fame += 50;
+                        }
+                        echo '<option value="9000">9000+</option>';
+                    ?>
+                  </select>
+            </div>
+            <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect01">Location</label>
+                  </div>
+                  <input type=text name=location placeholder="WIP">
+            </div>
+            <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <label class="input-group-text" for="inputGroupSelect01">Tag Matching</label>
                   </div>
                   <select class="custom-select" name="tagmatching">
                     <?php
-                            echo '  <option value=1>YEAH</option>
-                            <option value=0>NO PLEASE NO</option>';
+                            echo '  <option value="1">YEAH</option>
+                            <option value="0">NO PLEASE NO</option>';
                     ?>
                   </select>
             </div>
@@ -60,12 +93,13 @@ require_once('../config/setup.php');
             </form>
         </div>
         <div class="col-sm">
-            col two
-            matches
             <?php
-                if ($_GET['search']) {
-                    // do great things;
-                } 
+                if (isset($_GET['age1'])) {
+                    echo '<h1>RESULTS:</h1><br/>';
+                    require_once('matchme-v2.info.php');
+                    //print_r($_GET);
+                    echo '<h5>END OF RESULTS</h5><br/>';
+                }
             ?>
         </div>
     </div>

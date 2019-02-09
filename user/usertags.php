@@ -15,6 +15,8 @@ function showtag($tag) {
 
 if (isset($_GET['tag'])) {
     echo 'if statment';
+    try {
+
     
     $sql = "SELECT COUNT(*) username FROM usertags WHERE userid = $id";
     $res = $conn->query($sql);
@@ -29,12 +31,8 @@ if (isset($_GET['tag'])) {
         $stmt = $conn->prepare("$sql");
 
         $stmt->bindParam($tag1, $tag2, $tag3, $tag4, $tag5);
-        try {
-            $stmt->execute();
-        } catch(PDOException $e) {
-            echo "Tag update: " . $e->getMessage() . "<br>";
-            exit(); 
-        }
+        $stmt->execute();
+
         header("location: profile.php?tagsredone");
         exit();
     } else {
@@ -51,6 +49,10 @@ if (isset($_GET['tag'])) {
         $stmt->execute();
         header("location: profile.php?tagsdone");
         exit();
+    }
+    } catch(PDOException $e) {
+        echo "Tag error: " . $e->getMessage() . "<br>";
+        exit(); 
     }
 } else {
     echo 'else statment';

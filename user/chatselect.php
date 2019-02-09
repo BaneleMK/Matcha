@@ -40,18 +40,13 @@ include_once('../functions/sanitize.php');
                     $chatid = $row['id1'];
                     
 
-                  $sql = "SELECT picture FROM pics WHERE userid = '$chatid' AND picrole ='profile'";
+                  $sql = "SELECT * FROM users WHERE id = '$chatid'";
                   $stmt2 = $conn->prepare($sql);
                   $stmt2->execute();
 
-                  $chatimage = $stmt2->fetch();
-                  $image = $chatimage['picture'];
+                  $row1 = $stmt2->fetch();
 
-                  $sql = "SELECT * FROM users WHERE id = '$chatid'";
-                  $stmt3 = $conn->prepare($sql);
-                  $stmt3->execute();
-                  $row1 = $stmt3->fetch();
-
+                  $image = $row1['profilepic'];
                   $name = $row1['username'];
                   $bio = $row1['bio'];
 

@@ -203,10 +203,11 @@ if (!isset($_SESSION['username'])) {
                             echo'
                             <div class="form-group">
                               <label for="exampleFormControlTextarea1">Bio</label>
-                              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3">'.$bio['bio'].'</textarea>
+                              <textarea class="form-control" name="bio" form="bioform" name=bio rows="3">'.$bio['bio'].'</textarea>
                             </div>
                             ';
                     ?>
+                    <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                 </div>
                 <hr/>
@@ -215,7 +216,7 @@ if (!isset($_SESSION['username'])) {
                       <div class="input-group-prepend">
                         <label class="input-group-text" for="inputGroupSelect01">Tag#1</label>
                       </div>
-                      <select class="custom-select" name="gender">
+                      <select class="custom-select" name="tag1">
                         <?php
                             $id = $_SESSION['id'];
                             $sql = "SELECT tag1 FROM usertags WHERE userid = $id";
@@ -238,7 +239,7 @@ if (!isset($_SESSION['username'])) {
                       <div class="input-group-prepend">
                         <label class="input-group-text" for="inputGroupSelect01">Tag#2</label>
                       </div>
-                      <select class="custom-select" name="gender">
+                      <select class="custom-select" name="tag2">
                         <?php
                             $sql = "SELECT tag2 FROM usertags WHERE userid = $id";
                             $stmt = $conn->prepare($sql);
@@ -260,7 +261,7 @@ if (!isset($_SESSION['username'])) {
                       <div class="input-group-prepend">
                         <label class="input-group-text" for="inputGroupSelect01">Tag#3</label>
                       </div>
-                      <select class="custom-select" name="gender">
+                      <select class="custom-select" name="tag3">
                         <?php
                             $sql = "SELECT tag3 FROM usertags WHERE userid = $id";
                             $stmt = $conn->prepare($sql);
@@ -282,7 +283,7 @@ if (!isset($_SESSION['username'])) {
                       <div class="input-group-prepend">
                         <label class="input-group-text" for="inputGroupSelect01">Tag#4</label>
                       </div>
-                      <select class="custom-select" name="gender">
+                      <select class="custom-select" name="tag4">
                         <?php
                             $sql = "SELECT tag4 FROM usertags WHERE userid = $id";
                             $stmt = $conn->prepare($sql);
@@ -304,7 +305,7 @@ if (!isset($_SESSION['username'])) {
                       <div class="input-group-prepend">
                         <label class="input-group-text" for="inputGroupSelect01">Tag#5</label>
                       </div>
-                      <select class="custom-select" name="gender">
+                      <select class="custom-select" name="tag5">
                         <?php
                             $sql = "SELECT tag5 FROM usertags WHERE userid = $id";
                             $stmt = $conn->prepare($sql);
