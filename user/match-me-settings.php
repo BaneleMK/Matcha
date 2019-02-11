@@ -97,10 +97,13 @@ require_once('../config/setup.php');
                 if (isset($_GET['age1'])) {
                     echo '<h1>RESULTS:</h1><br/>';
                     require_once('matchme-v2.info.php');
-                    //print_r($_GET);
-                    echo '<h5>END OF RESULTS</h5><br/>';
+                    echo '<ul class="list-group">
+                    <li class="list-group-item list-group-item-info">
+                    <h5>END OF RESULTS</h5>
+                </ul>';
                 }
             ?>
+            
         </div>
     </div>
     

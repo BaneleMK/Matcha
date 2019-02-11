@@ -1,6 +1,7 @@
 <?php 
       $location = getcwd();
-      $loc = end(explode( '\\' , $location));
+      //$loc = end(explode( '\\' , $location));
+      $loc = end(explode( '/' , $location));
       $folders = array('login', 'signup', 'user');
       $arr = in_array($loc, $folders);
 
@@ -12,7 +13,7 @@
               <span class="navbar-toggler-icon"></span>
             </button>
           
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent" >
               <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
                   <a class="nav-link" href="/'.$loc.'/user/profile.php">User <span class="sr-only">(current)</span></a>
@@ -41,6 +42,8 @@
                   echo '</div>
                 </li>
               </ul>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarSupportedContenti" >
             </div>
           </nav>';
           } else {

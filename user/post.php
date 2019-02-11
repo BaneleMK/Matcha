@@ -14,7 +14,7 @@ if (!isset($_SESSION['username'])) {
         <meta charset="UTF-8">   
         <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     </head>
-    <body>
+    <body bgcolor=white>
         <nv>
             <nvli style="float: left;"><a href="../index.php">Home</a></nvli>
             <?php

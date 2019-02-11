@@ -17,7 +17,7 @@
         $results = array_intersect($tags1, $tags2);
         if ($results) {
             // echo "YUPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP";
-            require_once("matchbox.php");
+            require("matchbox.php");
         }
         // echo "NOPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPe";
     }
@@ -39,7 +39,7 @@
         }
         // echo "<br>Lets see if we found something";
         // echo "btw boss this is what the sql was like <br>'$sql'";
-        return ($stmt->fetch());
+        return ($stmt);
     }
 
     require_once("../config/setup.php");
@@ -91,14 +91,14 @@
                 $famenage = "AND age >= $agemin AND age <= $agemax AND fame >= $famemin AND fame <= $famemax";
             }
 
-            $match = sexuality($seekerid, $conn, $famenage);
-
+            $stmt = sexuality($seekerid, $conn, $famenage);
+            $match = $stmt->fetch();
             $matchid = $match['id'];
             // echo "<br> gonna be a lil noisey here boss and check whats up at match id = ".$matchid;
             while ($match['id']) {
-                echo "okay boss lets check if these people have been matched before<br>";
+                // echo "okay boss lets check if these people have been matched before<br>";
                 $sql = "SELECT id FROM matches WHERE seekerid = '$seekerid' AND matchid = '$matchid'";
-                echo $sql;
+                // echo $sql;
                 $stmt1 = $conn->prepare($sql);
                 $stmt1->execute();
                 $valid = $stmt1->fetch();
@@ -106,18 +106,20 @@
 
                 // echo 'match id  = '.$matchid.' for the seeker with id ='.$seekerid.'<br> valid id = '.$validid.' <br>';
                 if ($valid['id']) {
-                     // echo 'not a match, sorry. NEXT!!!!!!!!!!!<br>';
+                    // echo 'not a match, sorry. NEXT!!!!!!!!!!!<br>';
                     $match = $stmt->fetch();
                     $matchid = $match['id'];
+                    //echo "new id = $matchid";
                 } else {
-                     echo 'We can match this peace! ';
+                    // echo 'We can match this peace! ';
                     if ($seekertag) {
                         // echo "Boss ah we need to check the tags 1st for this one seekertag = $seekertag :D <br>";
                         tagmatch($matchid, $seekerid, $conn);
                         $match = $stmt->fetch();
                         $matchid = $match['id'];
                     } else {
-                        require_once("matchbox.php");
+                        // echo "no tags boss <br>";
+                        require("matchbox.php");
                         $match = $stmt->fetch();
                         $matchid = $match['id'];
                     }
