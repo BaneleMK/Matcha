@@ -33,6 +33,7 @@
                 profilepic INT(1) UNSIGNED,
                 user_state VARCHAR(30) NOT NULL DEFAULT 'unregistered',
                 comment_notifications VARCHAR(4) NOT NULL DEFAULT 'ON',
+                current_notification INT(3) UNSIGNED DEFAULT 0,
                 verificationcode INT(7) UNSIGNED NOT NULL,
                 bio VARCHAR(500) NOT NULL DEFAULT 'Yo, this is my empty bio yey',
                 tagmatching VARCHAR(20) NOT NULL DEFAULT 'YEAH'

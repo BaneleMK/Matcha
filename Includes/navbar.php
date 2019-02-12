@@ -1,10 +1,15 @@
 <?php 
       $location = getcwd();
-      //$loc = end(explode( '\\' , $location));
-      $loc = end(explode( '/' , $location));
+      if (PHP_OS == "WINNT")
+        $loc = end(explode( '\\' , $location));
+      else 
+        $loc = end(explode( '/' , $location));
       $folders = array('login', 'signup', 'user');
       $arr = in_array($loc, $folders);
 
+      $localhost = $_SERVER['HTTP_HOST'];
+      echo $localhost;
+      
         if (!$arr) {
           echo '
           <nav class="navbar navbar-expand-lg navbar-light bg-light">

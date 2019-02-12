@@ -42,18 +42,26 @@
             $email = $row['email'];
             if ($row['comment_notifications'] != 'OFF') {
                 //if its on send an email notifying
+                $localhost = $_SERVER['host'];
+                
+                /*$email_messaage = "
+                One of your posts received a comment from the legend $username.
+                Check it out with the link below.
+                ---------
+                http://localhost:8080/Camagru/user/comments.php?post=$postid
+                ---------";*/
 
                 $email_messaage = "
                 One of your posts received a comment from the legend $username.
                 Check it out with the link below.
                 ---------
-                http://localhost:8080/Camagru/user/comments.php?post=$postid
+                $localhost/Camagru/user/comments.php?post=$postid
                 ---------";
 
                 mail($email, "Trender - new comment on post", $email_messaage,"From: Trendernoreply.com");
             }
             header("Location: comments.php?post=" . $postid);
-            echo 'madeit';
+            // echo 'madeit';
             exit();
         } catch (PDOException $e) {
             //echo "failed: " . $e->getMessage() . "<br>";

@@ -98,9 +98,9 @@ require_once('../config/setup.php');
                     echo '<h1>RESULTS:</h1><br/>';
                     require_once('matchme-v2.info.php');
                     echo '<ul class="list-group">
-                    <li class="list-group-item list-group-item-info">
+                    <li class="list-group-item list-group-item-dark">
                     <h5>END OF RESULTS</h5>
-                </ul>';
+                    </ul>';
                 }
             ?>
             
