@@ -81,6 +81,7 @@ navigator.mediaDevices.getUserMedia({video: true, audio: false})
         // from happening e.g link from following url or submit from submiting form
     }, false)
 
+    // Its very understan
     function takepic() {
         console.log('taking pics');            
         // the canvas is made here.

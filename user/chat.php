@@ -55,28 +55,43 @@ include_once('../functions/sanitize.php');
                   }
                 ?>
             </div>
-            <form action="chat.info.php?" method=POST>
+            <form id="messageform" action="chat.info.php" method=POST>
             <div class="input-group mb-3">
-              <input value="<?php echo $id;?>" name="receiver" hidden>
-              <input type="text" name="textmessage" class="form-control" placeholder="feel free to type here" aria-label="Recipient's username" aria-describedby="button-addon2">
+              <input value="<?php echo $id;?>" id="receiver" name="receiver" hidden>
+              <input type="text" id="textmessage" name="textmessage" class="form-control" placeholder="feel free to type here" aria-label="Recipient's username" aria-describedby="button-addon2">
               <div class="input-group-append">
-                  <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Send it</button>
+                <!--input id="messageform" class="btn btn-outline-secondary" type="submit" id="button-addon2" value="send"-->
+                <button id="messageform" class="btn btn-outline-secondary" type="submit" id="button-addon2">Send it</button>
               </div>
             </div>
             </form>
         </div>
     <!--js for bootstrap-->
-    <script>
-      $("button").click(function(){
-        $.ajax({url: "demo_test.txt", success: function(result){
-          $("#div1").html(result);
-        }});
-      });
-    </script>
-
-
+    
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+    <script type='text/javascript'>
+      /*$("button").click(function(){
+        $.ajax({url: "demo_test.txt", success: function(result){
+          $("#div1").html(result);
+        }});
+      });*/
+
+      $("#messageform").submit(function(event){
+        event.preventDefault();
+        
+        var $form = $(this);
+        var url = $form.attr('action');
+
+        // something is wrong with the next instruction
+          var posting = $.post( url, {textmessage: $("#textmessage").val(), receiver: $("#receiver").val() } );
+
+        posting.done(function(data){
+          alert('success');
+        });
+      });
+    </script>
 </body>
 </html>

@@ -8,7 +8,7 @@
       $arr = in_array($loc, $folders);
 
       $localhost = $_SERVER['HTTP_HOST'];
-      echo $localhost;
+      
       
         if (!$arr) {
           echo '
