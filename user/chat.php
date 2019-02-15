@@ -91,6 +91,10 @@ include_once('../functions/sanitize.php');
         posting.done(function(data){
           alert('success');
         });
+
+        // some other things i might need are to actually use
+        // document.createElement and document.createText for the actuall text message for new text messages and appendChild to ad them without reloading.
+
       });
     </script>
 </body>
