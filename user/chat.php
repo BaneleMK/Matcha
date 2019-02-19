@@ -47,10 +47,11 @@ include_once('../functions/sanitize.php');
 
                   while ($res = $stmt->fetch()){
                     $textmes = $res['textmessage'];
+                    $mesid = $res['messageid'];
                     if ($res['receiverid'] == $id){
-                      echo "<div class=\"align-self-end\">$textmes</div>";
+                      echo "<div id=\"$mesid\" class=\"align-self-end\">$textmes</div>";
                     } else {
-                      echo "<div class=\"align-self-start\">$textmes</div>";
+                      echo "<div id=\"$mesid\" class=\"align-self-start\">$textmes</div>";
                     }
                   }
                 ?>
@@ -79,6 +80,43 @@ include_once('../functions/sanitize.php');
           $("#div1").html(result);
         }});
       });*/
+      /*var time = 5;
+      setInterval(() => {
+        $.get("hello.php", function(data) {
+          alert(time +' sec passed: ' + data);
+        })
+        .done(function () {
+          alert('passed');
+        })
+        .fail(function () {
+          alert('error...ror');
+        });
+        
+        alert(time +' sec passed.');
+        time += 5;
+      }, 5000);*/
+
+      var time = 0;
+      
+      //attr("id")
+      lastmessageid = $("#chatbox div:last-child").attr("id")
+      setInterval(() => {
+        $.get("newmessage.php", {lastmessageid: lastmessageid}, function(data) {
+          console.log(time +' sec passed: ' + data);            
+          //alert(time +' sec passed: ' + data);
+        })
+        .done(function () {
+          console.log('passed');            
+          //alert('passed');
+        })
+        .fail(function () {
+          console.log('something went wrong boss');            
+          //alert('something went wrong boss');
+        });
+        
+        time += 10;
+      }, 10000);
+
       $("#messageform").submit(function(event){
         event.preventDefault();
         
@@ -102,9 +140,9 @@ include_once('../functions/sanitize.php');
         // something is wrong with the next instruction
         var posting = $.post( url, {textmessage: text, receiver: receiver } );
 
-        posting.done(function(data){
+        /*posting.done(function(data){
           alert('sent');
-        });
+        });*/
 
       });
     </script>

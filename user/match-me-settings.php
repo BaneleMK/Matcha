@@ -20,12 +20,12 @@ require_once('../config/setup.php');
     
     <div class="row">
         <div class="col-sm">
-            <form action="match-me-settings.php?search" method="GET">
+            <form id="search_form" action="match-me-settings.php?search" method="GET">
             <div class="input-group mb-3">
                   <div class="input-group-prepend">
                     <label class="input-group-text" for="inputGroupSelect01">Age range</label>
                   </div>
-                  <select class="custom-select" name="age1">
+                  <select class="custom-select" id=age1 name="age1">
                     <?php
                         $age = 18;
                         while ($age < 150){
@@ -34,7 +34,7 @@ require_once('../config/setup.php');
                         }
                     ?>
                   </select>
-                  <select class="custom-select" name="age2">
+                  <select class="custom-select" id=age2 name="age2">
                     <?php
                         $age = 18;
                         echo '<option value="150">150</option>';
@@ -49,7 +49,7 @@ require_once('../config/setup.php');
                   <div class="input-group-prepend">
                     <label class="input-group-text" for="inputGroupSelect01">Fame rating</label>
                   </div>
-                  <select class="custom-select" name="fame1">
+                  <select class="custom-select" id="fame1" name="fame1">
                     <?php
                         $fame = 0;
                         while ($fame < 900){
@@ -59,7 +59,7 @@ require_once('../config/setup.php');
                         echo '<option value="9000">9000+</option>';
                     ?>
                   </select>
-                  <select class="custom-select" name="fame2">
+                  <select class="custom-select" id="fame2" name="fame2">
                     <?php
                         $fame = 0;
                         echo '<option value="9000">9000+</option>';
@@ -81,14 +81,14 @@ require_once('../config/setup.php');
                   <div class="input-group-prepend">
                     <label class="input-group-text" for="inputGroupSelect01">Tag Matching</label>
                   </div>
-                  <select class="custom-select" name="tagmatching">
+                  <select class="custom-select" id="tagmatching" name="tagmatching">
                     <?php
                             echo '  <option value="1">YEAH</option>
                             <option value="0">NO PLEASE NO</option>';
                     ?>
                   </select>
             </div>
-            <button type="submit" class="btn btn-primary">Search</button>
+            <button id="search" type="submit" class="btn btn-primary">Search</button>
             <hr/>
             </form>
         </div>
@@ -111,7 +111,29 @@ require_once('../config/setup.php');
 
     <!--js for bootstrap-->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    <script>
+    /*$("#search_form").submit(function(event){
+        event.preventDefault();
+        
+        var age1 = $("#age1").val();
+        var age2 = $("#age2").val();
+        var fame1 = $("#fame1").val();
+        var fame2 = $("#fame2").val();
+        var tagmatching = $("#tagmatching").val();
+        
+        var $form = $(this);
+        var url = $form.attr('action');
+
+        // something is wrong with the next instruction
+        var posting = $.load( url, { age1: age1, age2: age2, fame1 : fame1, fame2 : fame2, tagmatching : tagmatching} );
+
+        posting.done(function(data){
+          alert('sent');
+        });
+    });*/
+    </script>
 </body>
 </html>
