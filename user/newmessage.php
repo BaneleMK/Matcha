@@ -9,7 +9,7 @@
     $res = $stmt->fetch();
     $mesid = $res['messageid'];
     $lastmessageid = $_GET['lastmessageid'];
-    echo "$lastmessageid <br>";
+    echo "$lastmessageid";
     print_r($res);
     if ($mesid > $lastmessageid) {
         $textmes = $res['textmessage'];

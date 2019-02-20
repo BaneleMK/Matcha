@@ -172,6 +172,17 @@ if (!isset($_SESSION['username'])) {
                     ?>
                 </div>
                 <script src="../js/postcam.js"></script>
+                <script>
+        function putimage() {
+            //var form = document.getElementById(filetouploud);
+            console.log('canplay done');     
+            var image = document.getElementById("image");
+            console.log('canplay done2');     
+
+            image.src = "21fbf062a8633c2506a534dfe4f4d0cc2b61fad8.jpg";
+            console.log('canplay done3');     
+        }
+    </script>
             </form>
             </div>   
         </div>
